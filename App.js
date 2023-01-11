@@ -89,4 +89,7 @@ const styles = StyleSheet.create({
   },
 });
 
-// nan
+// nan: mỗi khi pull code hay chuyển nhánh sẽ có thay đổi file package.json dễ gây ra lỗi khi chạy.
+// nan: khi gặp lỗi đó cần chạy: npm install
+// nan: nếu npm install vẫn lỗi thì xóa thư mục: node_modules rồi chạy lại: npm install.
+// nan: nếu vẫn lỗi thì xóa thư mục: node_modules và file: package-lock.json rồi chạy lại: npm install.
