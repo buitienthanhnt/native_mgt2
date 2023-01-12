@@ -1,16 +1,17 @@
 const request_data = {
     http: "http://",
     https: "http://",
-    ip: "192.168.100.209/",  // jm360: cmd: ip a to get ipaddress
-    // ip: "192.168.1.151/",  // mochi 192.168.1.150: ip a
+    // ip: "192.168.100.209/",  // jm360: cmd: ip a to get ipaddress
+    ip: "192.168.1.153/",  // mochi 192.168.1.150: ip a
     uri_241: "magento241/index.php/",
+    // uri_241: "magento242/pub/",
     uri_243: "magento243/pub/",
     rest: "rest/",
     v1: "V1/",
     data: {},
     value: [],
     name: "",
-    title: "tha value title from config",
+    title: "tha value title from config22",
     page_size: 5,
     api: {
         product_list: "productList/",

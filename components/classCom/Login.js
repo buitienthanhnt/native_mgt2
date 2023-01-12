@@ -53,7 +53,7 @@ class Login extends Component {
                     load_login: false
                 });
             }.bind(this)).then(
-                (response)=>{
+                (response) => {
                     this.props.navigation.navigate("UserDetail", { user_data: this.state.customer_data });
                 }
             )
@@ -205,6 +205,21 @@ class Login extends Component {
                                                 }}>
                                                     <Text style={{ textAlign: "right", fontSize: 16, color: "violet", marginTop: 8 }}>Register new account?</Text>
                                                 </TouchableOpacity>
+                                            </View>
+
+                                            <View style={{ marginTop: 20 }}>
+                                                <TouchableOpacity onPress={() => {
+                                                    this.setState({ user: 'roni_cost@example.com' })
+                                                }}>
+                                                    <Text style={{ fontSize: 16, color: "red" }}>user_email: {'roni_cost@example.com'}</Text>
+                                                </TouchableOpacity>
+
+                                                <TouchableOpacity onPress={() => {
+                                                    this.setState({ pass: "roni_cost3@example.com" })
+                                                }}>
+                                                    <Text style={{ fontSize: 16, color: "red" }}>password: {'roni_cost3@example.com'}</Text>
+                                                </TouchableOpacity>
+
                                             </View>
                                         </View>
                                     </ImageBackground>
