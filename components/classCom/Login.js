@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image, StyleSheet, Dimensions, ImageBackground, TextInput, Button, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, Dimensions, ImageBackground, TextInput, Button, TouchableOpacity, ToastAndroid, Platform } from "react-native";
 // import Icon from 'react-native-vector-icons/FontAwesome'; // mặc định có sẵn trong thư viện.
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import axios from 'axios'; // npm install axios
@@ -190,7 +190,9 @@ class Login extends Component {
                                                                 }}
                                                                 width={120}
                                                                 onPress={() => {
-                                                                    this.login();
+                                                                    console.log(this);
+                                                                    this.props.navigation.navigate("UserDetail");
+                                                                    // this.login();
                                                                 }}
                                                             >
                                                                 <FontAwesome5Icon name="satellite" size={32} color="black"></FontAwesome5Icon>
@@ -209,13 +211,19 @@ class Login extends Component {
 
                                             <View style={{ marginTop: 20 }}>
                                                 <TouchableOpacity onPress={() => {
-                                                    this.setState({ user: 'roni_cost@example.com' })
+                                                    this.setState({ user: 'roni_cost@example.com' });
+                                                    if (Platform.OS != "web") {
+                                                        ToastAndroid.show(`added ${this.state.user} for username`, 2000);
+                                                    }
                                                 }}>
                                                     <Text style={{ fontSize: 16, color: "red" }}>user_email: {'roni_cost@example.com'}</Text>
                                                 </TouchableOpacity>
 
                                                 <TouchableOpacity onPress={() => {
-                                                    this.setState({ pass: "roni_cost3@example.com" })
+                                                    this.setState({ pass: "roni_cost3@example.com" });
+                                                    if (Platform.OS != "web") {
+                                                        ToastAndroid.show(`added ${this.state.pass} for password`, 2000);
+                                                    }
                                                 }}>
                                                     <Text style={{ fontSize: 16, color: "red" }}>password: {'roni_cost3@example.com'}</Text>
                                                 </TouchableOpacity>
