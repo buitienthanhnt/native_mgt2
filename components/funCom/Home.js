@@ -15,9 +15,9 @@ const Home = ({ navigation, route }) => {
             </View>
             <View style={{ flex: 60 }}>
                 <TouchableOpacity style={{ width: "100%", height: "100%" }} onPress={() => {
-                    navigation.navigate("Login", { customer_id: 1 });
+                    // navigation.navigate("Login", { customer_id: 1 });
                     // navigation.navigate("Register", {customer_id: 1});
-                    // navigation.navigate("UserDetail"); //Collslap
+                    navigation.navigate("UserDetail"); //Collslap
                     // navigation.navigate("Collslap");
                     // navigation.navigate("DetailProduct", {pro_id: 46});
                 }}>
