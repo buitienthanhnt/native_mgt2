@@ -1,10 +1,11 @@
 const request_data = {
     http: "http://",
     https: "http://",
-    ip: "192.168.100.209/",  // jm360: cmd: ip a to get ipaddress
+    ip: "192.168.100.138/",  // jm360: cmd: ip a to get ipaddress
     // ip: "192.168.1.151/",  // mochi 192.168.1.150: ip a
-    uri_241: "magento241/index.php/",
+    // uri_241: "magento241/index.php/",
     uri_243: "magento243/pub/",
+    uri_241: "magento2git/",
     rest: "rest/",
     v1: "V1/",
     data: {},
@@ -34,3 +35,5 @@ const request_data = {
 };
 
 export default request_data;
+// http://192.168.100.138/magento2git/pub/media/catalog/product/cache/28d8c9adbc3607147ab31a297827436b//l/u/luma-yoga-kit-2.jpg
+// http://192.168.100.138/magento2git/pub/media/catalog/product%E0%B2%AChe%EF%BF%BDadbc3607147ab31a297827436b/l/u/luma-yoga-kit-2.jpg
