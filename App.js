@@ -1,95 +1,80 @@
-import React, { useEffect, useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, Dimensions, ScrollView, Platform, Button, TouchableOpacity, FlatList } from 'react-native';
+import React, { Component } from 'react';
+import {
+  AppRegistry,
+  StyleSheet,
+  Platform,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  View
+} from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AddView from './components/AddView';
+import Counter from './components/Counter';
+import TaskFlatList from './components/TaskFlatList';
 
-import HeadComponent from './components/classCom/HeadComponent';
-import Conten from './components/classCom/Conten';
-import BottomHead from './components/classCom/BottomHead';
-import TopConten from './components/classCom/TopConten';
-import Config from './assets/Datasource/Config';
-import DetailProduct from './components/funCom/DetailProduct';
-import ListProduct from './components/classCom/ListProduct';
-import Home from './components/funCom/Home';
-import ListCategory from './components/classCom/ListCategory';
-import Login from './components/classCom/Login';
-import { UserDetail } from './components/classCom/UserDetail';
-import Collslap from './components/funCom/Collslap';
-import Register from './components/classCom/Register';
+export default class Todo extends Component {
 
-const Stack = createNativeStackNavigator();
+  constructor(props) {
+    super(props);
 
-const MyStack = ({ navigation }) => {
-  return (
-    <View style={{ flex: 1 }}>
-      <View style={styles.container}>
-
-        <HeadComponent style={{ flex: 25 }}></HeadComponent>
-        <TopConten style={{ flex: 60 }}></TopConten>
-        <Conten
-          navigation={navigation}
-        ></Conten>
-        <BottomHead style={{ flex: 15 }}></BottomHead>
-        <StatusBar style="auto" />
-
-      </View>
-    </View>
-  );
-};
-
-const getDetail = (product_id = 0) => {
-  // let path = "http://192.168.100.209/magento241/index.php/rest/V1/productDetail/277";
-  if (product_id) {
-    let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + "productDetail/" + product_id;
-    return fetch(path).then((response) => response.json()).then(
-      (data) => {
-        return data;
-      }
-    ).catch(
-      (error) => {
-        console.log(error);
-      }
-    );
-  } else {
-    return new Promise((resolveOuter) => {
-      resolveOuter(
-      );
-    });
+    this.state = {
+      data : [
+        { title: 'Go to the office', isFinished: true },
+        { title: 'Prepare tasks for today', isFinished: false },
+        { title: 'Team meeting', isFinished: false },
+        { title: 'Commit tasks changed', isFinished: false },
+      ]
+    }
   }
+
+//   onAddNewTask = (taskName) => {
+//     const newTask = { title: taskName, isFinished: false }
+//     const newTaskList = [ ...this.state.data, newTask ]
+
+//     this.setState({ data: newTaskList });
+//   }
+
+//   onFinishedItem = (index) => {
+//     let newTaskList = this.state.data;
+//     newTaskList[index].isFinished = true; 
+//     this.setState({ data: newTaskList });
+//   }
+
+//   onDeleteItem = (index) => {
+//     let newTaskList = this.state.data.filter( (item, i) => i != index );
+//     this.setState({ data: newTaskList });
+//   }
+
+//   render() {
+//     return (
+//       <View style={ styles.container }>
+//         <AddView onAddNewTask={ this.onAddNewTask } />
+//         <Counter />
+//         <TaskFlatList 
+//           listData={ this.state.data } 
+//           onFinishedItem={ this.onFinishedItem } 
+//           onDeleteItem={ this.onDeleteItem }
+//         />
+//       </View>      
+//     );
+//   }
+
+render(){
+    return (
+        <View>
+            <Text>123</Text>
+        </View>
+    )
 }
 
-export default function App({navigation}) {
-  const dem = Dimensions.get("window");
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} options={{ title: 'Welcome' }} />
-        <Stack.Screen name="MyStack" component={MyStack} />
-        <Stack.Screen name="DetailProduct" component={DetailProduct} />
-        <Stack.Screen name="ListCategory" component={ListCategory} navigation={navigation}/>
-        <Stack.Screen name="ListProduct" component={ListProduct} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="UserDetail" component={UserDetail} />
-        <Stack.Screen name="Collslap" component={Collslap} />
-        <Stack.Screen name="Register" component={Register} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    // marginTop: Platform.OS == "android" ? 20 : 0,
-    flex: 1
-  },
+    flex: 1,
+    backgroundColor: '#E1F5FE'
+  }
 });
-
-// nan: mỗi khi pull code hay chuyển nhánh sẽ có thay đổi file package.json dễ gây ra lỗi khi chạy.
-// nan: khi gặp lỗi đó cần chạy: npm install
-// nan: nếu npm install vẫn lỗi thì xóa thư mục: node_modules rồi chạy lại: npm install.
-// nan: nếu vẫn lỗi thì xóa thư mục: node_modules và file: package-lock.json rồi chạy lại: npm install.
