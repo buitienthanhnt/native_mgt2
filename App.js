@@ -23,6 +23,9 @@ import TaskFlatList from './components/TaskFlatList';
 import AddView from './components/AddView';
 
 // https://blog.haposoft.com/tich-hop-redux-reactnative/ redux use docs.
+// https://redux.js.org/introduction/core-concepts
+// https://blog.haposoft.com/cach-deploy-nextjs-app-len-server/
+//
 import { createStore, combineReducers, applyMiddleware } from 'redux'; // npm install redux --save
 import { Provider } from 'react-redux'; // npm install react-redux --save :tạo cầu nối giữa redux vào react
 import thunk from 'redux-thunk';                                     // npm install redux-thunk --save (dùng cho chạy bất đồng bộ)
