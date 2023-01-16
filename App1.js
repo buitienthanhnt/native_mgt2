@@ -20,7 +20,7 @@ import Collslap from './components/funCom/Collslap';
 import Register from './components/classCom/Register';
 
 import {createStore, combineReducers, applyMiddleware} from 'redux'; // npm install redux --save
-import thunk from 'redux-thunk'; // npm install redux-thunk --save (dùng cho chạy bất đồng bộ)
+import thunk from 'redux-thunk';                                     // npm install redux-thunk --save (dùng cho chạy bất đồng bộ)
 import { set } from 'react-native-reanimated';
 
 const Stack = createNativeStackNavigator();
