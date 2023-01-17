@@ -9,7 +9,7 @@ import {
     FlatList,
     View
 } from 'react-native';
-import { connect, Connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 class TaskFlatList extends Component {
 

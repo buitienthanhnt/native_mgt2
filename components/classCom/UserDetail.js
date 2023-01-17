@@ -4,6 +4,7 @@ import { View, Text, Image, Button, StyleSheet, TouchableOpacity } from "react-n
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
 import AddressDetail from "../funCom/AddressDetail";
+import { connect } from 'react-redux';
 
 const customer_data = {
     "customer_id": 1,
@@ -77,6 +78,7 @@ class UserDetail extends Component {
     }
 
     render() {
+        console.log(this);
         const { first_name, last_name, default_billing_address, default_shipping_address } = this.state.customer_data;
         return (
             <View style={css.container}>
@@ -177,6 +179,7 @@ class Address extends Component {
     }
 
     render() {
+        console.log(this);
         return (
             <View>
                 <Text>address_data</Text>
@@ -192,4 +195,12 @@ const css = StyleSheet.create({
     }
 });
 
-export { UserDetail };
+// export { UserDetail };
+export default connect(
+    (state) => {
+        return {user_data: state};
+    },
+    (dispatch) => {
+        return {};
+    }
+)(UserDetail);

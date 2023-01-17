@@ -436,15 +436,15 @@ const Bunder_select_item = (props) => {
                     let selects = props.parent._select;
                     selects[props._pid] = item.eid;
                     props.parent._setselect(selects);
-                    setSelecttion(!selecttion);
-                    props.ppr(!props.pprv)
+                        setSelecttion(!selecttion);
+                        props.ppr(!props.pprv)
                 }}
             />
             {/* <View style={{ flexDirection: "row", alignContent: "center", marginTop: "auto" }}> */}
             {(() => {
                 if (Platform.OS != "web") {
                     return (
-                        <View style={{ flexDirection: "row", alignContent: "center", marginTop: "auto" }}>
+                        <View style={{ flexDirection: "row", alignContent: "center", margin: "auto", marginLeft: 'inherit' }}>
                             <View style={{ width: "70%" }}>
                                 <Text style={{ fontSize: 16 }}>{item.name}</Text>
                             </View>
@@ -455,7 +455,7 @@ const Bunder_select_item = (props) => {
                     )
                 } else {
                     return (
-                        <View style={{ flexDirection: "row", alignContent: "center", marginTop: "auto" }}>
+                        <View style={{ flexDirection: "row", alignContent: "center", margin: "auto", marginLeft: 'inherit' }}>
                             <Text style={{ fontSize: 16, alignContent: "center", marginTop: "auto" }}>{item.name}   +$_{(Math.round(item.price * 100) / 100).toFixed(2)}</Text>
                         </View>
                     )

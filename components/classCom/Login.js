@@ -9,7 +9,7 @@ import * as WebBrowser from 'expo-web-browser';  // npx expo install expo-web-br
 class Login extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props);
+        // console.log(this.props);
         this.state = {
             use_image: 0,
             title: "",

@@ -15,7 +15,7 @@ import ListProduct from './components/classCom/ListProduct';
 import Home from './components/funCom/Home';
 import ListCategory from './components/classCom/ListCategory';
 import Login from './components/classCom/Login';
-import { UserDetail } from './components/classCom/UserDetail';
+import UserDetail from './components/classCom/UserDetail';
 import Collslap from './components/funCom/Collslap';
 import Register from './components/classCom/Register';
 
@@ -96,7 +96,7 @@ const taskListReducer = (state = appState, action) => {
             return { ...state, data: newTaskList };
             break;
         case 'ADD':
-            const newTask = {title: action.title, isFinished: false};
+            const newTask = { title: action.title, isFinished: false };
             return { ...state, data: [...newTaskList, newTask] };
             break;
         default:
@@ -162,7 +162,7 @@ const addAfter3s = () => {
 //   }
 // }
 
-export default class Todo extends Component {
+export default class App extends Component {
 
     constructor(props) {
         super(props);
@@ -196,6 +196,26 @@ export default class Todo extends Component {
     // }
 
     render() {
+        let view = 1;
+        if (view) {
+            return (
+                <Provider store={store}>
+                    <NavigationContainer>
+                        <Stack.Navigator>
+                            <Stack.Screen name="Home" component={Home} options={{ title: 'Welcome' }} />
+                            <Stack.Screen name="MyStack" component={MyStack} />
+                            <Stack.Screen name="DetailProduct" component={DetailProduct} />
+                            <Stack.Screen name="ListCategory" component={ListCategory} navigation={navigation} />
+                            <Stack.Screen name="ListProduct" component={ListProduct} />
+                            <Stack.Screen name="Login" component={Login} />
+                            <Stack.Screen name="UserDetail" component={UserDetail} />
+                            <Stack.Screen name="Collslap" component={Collslap} />
+                            <Stack.Screen name="Register" component={Register} />
+                        </Stack.Navigator>
+                    </NavigationContainer>
+                </Provider>
+            );
+        }
         return (
             <Provider store={store}>
                 {/* Provider bọc toàn bộ các đối tượng lại để tạo kết nối trong redux và react  */}

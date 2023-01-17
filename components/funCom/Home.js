@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, Dimensions, ScrollView, Platform, Button, TouchableOpacity, FlatList } from 'react-native';
+import { connect } from 'react-redux';
 
-const Home = ({ navigation, route }) => {
+const Home = (props, { navigation, route }) => {
+    console.log(route, this, props);
+    const pro_id = 6;
     return (
         <View style={{ flex: 1 }}>
             <View style={{ flex: 20 }}>
                 <TouchableOpacity onPress={() => {
                     // navigation.navigate("ListProduct",{category_id: 4});
-                    navigation.navigate("DetailProduct", { pro_id: 46 });
+                    navigation.navigate("DetailProduct", { pro_id: pro_id });
                 }} style={{ width: "100%", height: "100%" }}>
                     <Image source={require("../../assets/Images/IMG_20220519_163056.jpg")} style={{ width: "100%", height: "100%", resizeMode: "cover" }}></Image>
                 </TouchableOpacity>
@@ -36,4 +39,17 @@ const Home = ({ navigation, route }) => {
     );
 }
 
-export default Home;
+// export default Home;
+export default connect(
+    (state) => { return { data: state }; },
+    (dispatch) => {
+        return {
+            onFinishedItem: (index) => dispatch(finishTask(index)), // khai báo action qua props(nó sẽ gọi dispatch luôn)
+            onDeleteItem: (index) => dispatch(deleteTask(index))  // khai báo action qua props
+        }
+    },
+    (stateProps, dispatchProps, ownProps) => {
+        return Object.assign({}, ownProps, stateProps, dispatchProps);
+        // return { a: 123, b: 22222 };
+    }
+)(Home);
