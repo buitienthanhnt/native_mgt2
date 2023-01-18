@@ -1,9 +1,9 @@
 const request_data = {
     http: "http://",
     https: "http://",
-    // ip: "192.168.100.209/",  // jm360: cmd: ip a to get ipaddress
-    ip: "192.168.1.153/",  // mochi 192.168.1.150: ip a
-    uri_241: "magento241/index.php/",
+    ip: "192.168.1.216/", //  mochi-5g m6800(ubuntu cmd: "ip a" to get ipaddress)
+    uri_241: "magento1x/index.php/", // m6800
+    // uri_241: "magento241/index.php/",
     // uri_241: "magento242/pub/",
     uri_243: "magento243/pub/",
     rest: "rest/",

@@ -5,19 +5,19 @@ import { StyleSheet, Text, View, Image, Dimensions, ScrollView, Platform, Button
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import HeadComponent from './components/classCom/HeadComponent';
-import Conten from './components/classCom/Conten';
-import BottomHead from './components/classCom/BottomHead';
-import TopConten from './components/classCom/TopConten';
+import HeadComponent from './components/Classcom/HeadComponent';
+import Conten from './components/Classcom/Conten';
+import BottomHead from './components/Classcom/BottomHead';
+import TopConten from './components/Classcom/TopConten';
 import Config from './assets/Datasource/Config';
 import DetailProduct from './components/funCom/DetailProduct';
-import ListProduct from './components/classCom/ListProduct';
+import ListProduct from './components/Classcom/ListProduct';
 import Home from './components/funCom/Home';
-import ListCategory from './components/classCom/ListCategory';
-import Login from './components/classCom/Login';
-import UserDetail from './components/classCom/UserDetail';
+import ListCategory from './components/Classcom/ListCategory';
+import Login from './components/Classcom/Login';
+import UserDetail from './components/Classcom/UserDetail';
 import Collslap from './components/funCom/Collslap';
-import Register from './components/classCom/Register';
+import Register from './components/Classcom/Register';
 
 import TaskFlatList from './components/TaskFlatList';
 import AddView from './components/AddView';
@@ -79,7 +79,9 @@ let appState = {
         { title: 'Prepare tasks for today', isFinished: false },
         { title: 'Team meeting', isFinished: false },
         { title: 'Commit tasks changed', isFinished: false }
-    ]
+    ],
+    product_id: 6,
+    _tha_sid: ""
 };
 //===== action
 
@@ -98,6 +100,9 @@ const taskListReducer = (state = appState, action) => {
         case 'ADD':
             const newTask = { title: action.title, isFinished: false };
             return { ...state, data: [...newTaskList, newTask] };
+            break;
+        case 'CHANGE_PRODUCT':
+            return { ...state, product_id: action.product_id};
             break;
         default:
             break;
@@ -205,7 +210,7 @@ export default class App extends Component {
                             <Stack.Screen name="Home" component={Home} options={{ title: 'Welcome' }} />
                             <Stack.Screen name="MyStack" component={MyStack} />
                             <Stack.Screen name="DetailProduct" component={DetailProduct} />
-                            <Stack.Screen name="ListCategory" component={ListCategory} navigation={navigation} />
+                            <Stack.Screen name="ListCategory" component={ListCategory} navigation={this.props.navigation} />
                             <Stack.Screen name="ListProduct" component={ListProduct} />
                             <Stack.Screen name="Login" component={Login} />
                             <Stack.Screen name="UserDetail" component={UserDetail} />

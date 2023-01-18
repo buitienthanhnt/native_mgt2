@@ -5,6 +5,8 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import axios from 'axios'; // npm install axios
 import Config from "../../assets/Datasource/Config";
 import * as WebBrowser from 'expo-web-browser';  // npx expo install expo-web-browser  // https://docs.expo.dev/versions/v46.0.0/sdk/webbrowser/
+import { connect } from "react-redux";
+// ============================================
 
 class Login extends Component {
     constructor(props) {
@@ -227,6 +229,9 @@ class Login extends Component {
                                                 }}>
                                                     <Text style={{ fontSize: 16, color: "red" }}>password: {'roni_cost3@example.com'}</Text>
                                                 </TouchableOpacity>
+                                                <Button title="change pro" onPress={()=>{
+                                                    this.props.change_product
+                                                }}></Button>
 
                                             </View>
                                         </View>
@@ -271,4 +276,15 @@ const css = StyleSheet.create({
     }
 });
 
-export default Login;
+export default connect(
+    (appState)=>{
+        return {
+            g_data: appState
+        }
+    },
+    (dispatch)=>{
+        return {
+            change_product: dispatch({type: "CHANGE_PRODUCT", product_id: 12})
+        }
+    }
+)(Login);
