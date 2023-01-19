@@ -104,11 +104,16 @@ const taskListReducer = (state = appState, action) => {
         case 'CHANGE_PRODUCT':
             return { ...state, product_id: action.product_id};
             break;
+        case 'UPDATE_SID':
+            return{
+                ...state, _tha_sid: action.sid
+            };
+            break;
         default:
             break;
     }
     return state;
-}
+};
 
 //===== Middleware: nằm trước khi chạy hành động có thực thi hay không
 

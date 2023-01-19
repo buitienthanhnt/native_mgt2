@@ -25,6 +25,7 @@ const Home = (props) => {
                     // navigation.navigate("Collslap");
                     // navigation.navigate("DetailProduct", {pro_id: 46});
                 }}>
+                    {/* <Text style={{fontSize: 18, color: "red"}}>{product_id}</Text> */}
                     <Image source={require("../../assets/Images/diem-danh-7.jpg")} style={{ width: "100%", height: "100%", resizeMode: "cover" }}></Image>
                 </TouchableOpacity>
 

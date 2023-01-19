@@ -54,6 +54,7 @@ class Login extends Component {
                     pass: "",
                     load_login: false
                 });
+                this.props.update_sid(response.data.result.tha_sid);
             }.bind(this)).then(
                 (response) => {
                     this.props.navigation.navigate("UserDetail", { user_data: this.state.customer_data });
@@ -192,9 +193,9 @@ class Login extends Component {
                                                                 }}
                                                                 width={120}
                                                                 onPress={() => {
-                                                                    console.log(this);
-                                                                    this.props.navigation.navigate("UserDetail");
-                                                                    // this.login();
+                                                                    // console.log(this);
+                                                                    // this.props.navigation.navigate("UserDetail");
+                                                                    this.login();
                                                                 }}
                                                             >
                                                                 <FontAwesome5Icon name="satellite" size={32} color="black"></FontAwesome5Icon>
@@ -276,6 +277,10 @@ const css = StyleSheet.create({
     }
 });
 
+const update_sid = (dispatch, _sid)=>{
+    dispatch({type: "UPDATE_SID", sid: _sid});
+};
+
 export default connect(
     (appState)=>{
         return {
@@ -284,7 +289,10 @@ export default connect(
     },
     (dispatch)=>{
         return {
-            change_product: dispatch({type: "CHANGE_PRODUCT", product_id: 12})
+            change_product: dispatch({type: "CHANGE_PRODUCT", product_id: 12}),
+            update_sid: (_sid)=>{
+                dispatch({type: "UPDATE_SID", sid: _sid});
+            }
         }
     }
 )(Login);
