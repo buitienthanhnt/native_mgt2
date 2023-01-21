@@ -67,7 +67,7 @@ const deleteTask = (index) => {
 export default connect(
     state => { // tham số 1 gán props cho Component qua state, cũng là để lắng nghe state đó luôn
         return {
-            listData: state // gán vào props cho biến listData với giá trị trong state truyền qua redux.
+            listData: state.defRe // gán vào props cho biến listData với giá trị trong state truyền qua redux.
         };
     },
     dispatch => {
