@@ -1,8 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, Image, StyleSheet, FlatList, TouchableOpacity, Dimensions, LogBox } from "react-native";
 import Config from "../../assets/Datasource/Config";
+import { connect } from "react-redux";
 
-const Relateds = (props, {navigation, route}) => {
+const Relateds = (props) => {
+    
+    const get_related_products = async (pro_id = null) => {
+        if (pro_id) {
+            let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.product_related + pro_id + Config.use_params({_tha_sid: props._tha_sid});
+            return fetch(path).then((response) => response.json()).then((data) => {
+                return data;
+            });
+        }
+        else {
+            return new Promise((resolveOuter) => {
+                resolveOuter(
+                );
+            });
+        }
+    }
 
     const [product_id, setProduct_id] = useState(null);
     const [list, setList] = useState([]);
@@ -57,21 +73,6 @@ const Relateds = (props, {navigation, route}) => {
     )
 }
 
-const get_related_products = async (pro_id = null) => {
-    if (pro_id) {
-        let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.product_related + pro_id;
-        return fetch(path).then((response) => response.json()).then((data) => {
-            return data;
-        });
-    }
-    else {
-        return new Promise((resolveOuter) => {
-            resolveOuter(
-            );
-        });
-    }
-}
-
 const getDetail = (product_id = 0) => {
     if (product_id) {
         let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.product_detail + product_id;
@@ -98,4 +99,10 @@ const css = StyleSheet.create({
     }
 });
 
-export default Relateds;
+export default connect(
+    state=>{
+        return{
+            g_data: state.defRe
+        };
+    }
+)(Relateds);

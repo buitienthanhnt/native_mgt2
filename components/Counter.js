@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 
-export class Counter extends Component {
+export default class Counter extends Component {
 
   constructor(props) {
     super(props);
@@ -19,10 +19,10 @@ export class Counter extends Component {
   }
 
   render() {
-    const { number } = this.props.g_data;
-    console.log('====================================');
-    console.log(this.props);
-    console.log('====================================');
+    const { number } = this.props;
+    // console.log('====================================');
+    // console.log(this.props);
+    // console.log('====================================');
     return (
       <View style={styles.counterView} >
         <Button onPress={() => this.props.subfunction()} title="Sub" />
@@ -34,31 +34,31 @@ export class Counter extends Component {
   }
 }
 
-const add1 = () => {
-  return {
-    type: "ADD_NUMBER"
-  };
-};
+// const add1 = () => {
+//   return {
+//     type: "ADD_NUMBER"
+//   };
+// };
 
-const sub1 = () => {
-  return {
-    type: "SUB_NUMBER"
-  };
-};
+// const sub1 = () => {
+//   return {
+//     type: "SUB_NUMBER"
+//   };
+// };
 
-export default connect(
-  state => { // tham số 1 gán props cho Component qua state, cũng là để lắng nghe state đó luôn
-    return {
-      g_data: state.numberRe
-    };
-  },
-  dispatch => {
-    return {
-      addfunction: () => dispatch(add1()), // khai báo action qua props(nó sẽ gọi dispatch luôn)
-      subfunction: () => dispatch(sub1())  // khai báo action qua props
-    }
-  }
-)(Counter); // tạo kết nối với redux và react.
+// export default connect(
+//   state => { // tham số 1 gán props cho Component qua state, cũng là để lắng nghe state đó luôn
+//     return {
+//       g_data: state.numberRe
+//     };
+//   },
+//   dispatch => {
+//     return {
+//       addfunction: () => dispatch(add1()), // khai báo action qua props(nó sẽ gọi dispatch luôn)
+//       subfunction: () => dispatch(sub1())  // khai báo action qua props
+//     }
+//   }
+// )(Counter); // tạo kết nối với redux và react.
 
 
 const styles = StyleSheet.create({

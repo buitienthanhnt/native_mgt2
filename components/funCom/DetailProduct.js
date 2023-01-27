@@ -16,6 +16,8 @@ import { RadioButton } from 'react-native-paper';
 import Relateds from "./Relateds";
 import Reviews from "./Reviews";
 
+import { connect } from "react-redux";
+
 
 const CONTENT = [
     {
@@ -35,7 +37,8 @@ const CONTENT = [
     },
 ];
 
-const DetailProduct = ({ route, navigation }) => {
+const DetailProduct = (props) => {
+    const { route, navigation, g_data } = props;
     const myRef = useRef();
     // const [id, setId] = useState(null);
     const [data, setData] = useState({});
@@ -50,6 +53,26 @@ const DetailProduct = ({ route, navigation }) => {
     const [wishlist, setWishlist] = useState(false);
     const [qty, setQty] = useState({sim: 1});
     const [price, setPrice] = useState("0");
+
+    const getDetail = (product_id = 0) => {
+        if (product_id) {
+            let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.product_detail + g_data.product_id + Config.use_params({_tha_sid: g_data._tha_sid}); //`?_tha_sid=${g_data._tha_sid}`;
+            return fetch(path).then((response) => response.json()).then(
+                (data) => {
+                    return data;
+                }
+            ).catch(
+                (error) => {
+                    console.log(error);
+                }
+            );
+        } else {
+            return new Promise((resolveOuter) => {
+                resolveOuter(
+                );
+            });
+        }
+    }
 
     const image_height = 280;
     const _bottom = Dimensions.get("window").height - image_height;
@@ -570,26 +593,6 @@ const filter_image_path = (image_path, image_paths) => {
     return image_paths;
 }
 
-const getDetail = (product_id = 0) => {
-    if (product_id) {
-        let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.product_detail + product_id;
-        return fetch(path).then((response) => response.json()).then(
-            (data) => {
-                return data;
-            }
-        ).catch(
-            (error) => {
-                console.log(error);
-            }
-        );
-    } else {
-        return new Promise((resolveOuter) => {
-            resolveOuter(
-            );
-        });
-    }
-}
-
 const Config_attr = (props, { route, navigation }) => {
     const [data, setData] = useState([])
     useEffect(() => {
@@ -812,4 +815,13 @@ const styles = StyleSheet.create({
     },
 });
 
-export default DetailProduct;
+export default connect(
+    state =>{
+        return {
+            g_data: state.defRe
+        }
+    },
+    dispatch => {
+        return {};
+    }
+)(DetailProduct);

@@ -10,6 +10,7 @@ import {
   View
 } from 'react-native';
 import { connect } from 'react-redux';
+import addView from '../actions/AddViewAction';
 
 class AddView extends Component {
 
@@ -49,12 +50,12 @@ class AddView extends Component {
   }
 }
 
-const addView = (title)=>{
-  return {
-    type: "ADD",
-    title: title
-  };
-}
+// const addView = (title)=>{
+//   return {
+//     type: "ADD",
+//     title: title
+//   };
+// }
 export default connect(
   state => { // tham số 1 gán props cho Component qua state, cũng là để lắng nghe state đó luôn(nếu không cần dùng props nào thì thôi để {})
     return {}

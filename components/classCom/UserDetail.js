@@ -198,7 +198,7 @@ const css = StyleSheet.create({
 // export { UserDetail };
 export default connect(
     (state) => {
-        return {user_data: state};
+        return {user_data: state.defRe};
     },
     (dispatch) => {
         return {};

@@ -9,7 +9,6 @@ import HeadComponent from './components/Classcom/HeadComponent';
 import Conten from './components/Classcom/Conten';
 import BottomHead from './components/Classcom/BottomHead';
 import TopConten from './components/Classcom/TopConten';
-import Config from './assets/Datasource/Config';
 import DetailProduct from './components/funCom/DetailProduct';
 import ListProduct from './components/Classcom/ListProduct';
 import Home from './components/funCom/Home';
@@ -21,17 +20,16 @@ import Register from './components/Classcom/Register';
 
 import TaskFlatList from './components/TaskFlatList';
 import AddView from './components/AddView';
-import Counter from './components/Counter';
+import CounterContainer from './container/CounterContainer';
 // https://blog.haposoft.com/tich-hop-redux-reactnative/ redux use docs.
 // https://redux.js.org/introduction/core-concepts
 // https://blog.haposoft.com/cach-deploy-nextjs-app-len-server/
 //
 
 import { Provider } from 'react-redux'; // npm install react-redux --save :tạo cầu nối giữa redux vào react 
-import Store from "./assets/Datasource/Store";
+import AppStore from './redux/AppStore';
 
 const Stack = createNativeStackNavigator();
-
 const MyStack = ({ navigation }) => {
     return (
         <View style={{ flex: 1 }}>
@@ -64,10 +62,10 @@ export default class App extends Component {
     }
 
     render() {
-        let view = 0;
+        let view = 1;
         if (view) {
             return (
-                <Provider store={Store}>
+                <Provider store={AppStore}>
                     <NavigationContainer>
                         <Stack.Navigator>
                             <Stack.Screen name="Home" component={Home} options={{ title: 'Welcome' }} />
@@ -85,9 +83,9 @@ export default class App extends Component {
             );
         }
         return (
-            <Provider store={Store}>
+            <Provider store={AppStore}>
                 <View style={styles.container}>
-                    <Counter></Counter>
+                    <CounterContainer></CounterContainer>
                     <AddView />
                     <TaskFlatList />
                 </View>

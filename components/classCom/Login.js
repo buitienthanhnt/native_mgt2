@@ -284,7 +284,7 @@ const update_sid = (dispatch, _sid)=>{
 export default connect(
     (appState)=>{
         return {
-            g_data: appState
+            g_data: appState.defRe
         }
     },
     (dispatch)=>{

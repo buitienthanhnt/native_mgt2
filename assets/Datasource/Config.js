@@ -2,7 +2,7 @@ const request_data = {
     http: "http://",
     https: "http://",
     // ip: "192.168.1.216/", //  mochi-5g m6800(ubuntu cmd: "ip a" to get ipaddress)
-    ip: "192.168.1.9/", // home ip  
+    ip: "192.168.99.100/", // home ip  
     uri_241: "magento1x/index.php/", // m6800
     // uri_241: "magento241/index.php/",
     // uri_241: "magento242/pub/",
@@ -20,7 +20,8 @@ const request_data = {
         product_related: "productRelated/",
         category_list: "category_List/",
         customer_data: "customer/",
-        login_post: "customer/login"
+        login_post: "customer/login",
+        new_sid: "guest/newsid"
     },
     webview_url:{
         new_acc: "https://magento24.jmango.vn/index.php/default/customer/account/create/"
