@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image, StyleSheet, Dimensions, ImageBackground, TextInput, Button, TouchableOpacity, ToastAndroid, Platform } from "react-native";
+import { View, Text, Image, StyleSheet, Dimensions, ImageBackground, TextInput, Button, TouchableOpacity, ToastAndroid, Platform, Linking } from "react-native";
 // import Icon from 'react-native-vector-icons/FontAwesome'; // mặc định có sẵn trong thư viện.
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import axios from 'axios'; // npm install axios
@@ -231,7 +231,7 @@ class Login extends Component {
                                                     <Text style={{ fontSize: 16, color: "red" }}>password: {'roni_cost3@example.com'}</Text>
                                                 </TouchableOpacity>
                                                 <Button title="change pro" onPress={()=>{
-                                                    this.props.change_product
+                                                    Linking.openURL('tel:0702032201'); // mo qua ung dung di dong de goi.
                                                 }}></Button>
 
                                             </View>
@@ -289,7 +289,7 @@ export default connect(
     },
     (dispatch)=>{
         return {
-            change_product: dispatch({type: "CHANGE_PRODUCT", product_id: 12}),
+            change_product: dispatch({type: "CHANGE_PRODUCT", product_id: 30}),
             update_sid: (_sid)=>{
                 dispatch({type: "UPDATE_SID", sid: _sid});
             }

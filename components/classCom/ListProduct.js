@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, FlatList, Button, Platform, TextInput } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, FlatList, Platform, TextInput } from "react-native";
 import Config from '../../assets/Datasource/Config';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -102,20 +102,20 @@ class _ListProduct extends Component {
                 <View style={{ justifyContent: "center", alignItems: "center", width: "100%", height: "100%", backgroundColor: "rgb(242, 242, 242)" }}>
                     {
                         (
-                            ()=>{
+                            () => {
                                 if (this.state.title) {
-                                    return(
+                                    return (
                                         <Image source={require("../../assets/Images/weather-1.1s-200px.png")} style={{ width: 100, height: 100 }}></Image>
                                     )
-                                }else{
-                                    return(
+                                } else {
+                                    return (
                                         <Image source={require("../../assets/Images/DoubleRing-1s-200px.gif")} style={{ width: 100, height: 100 }}></Image>
                                     )
                                 }
                             }
                         )()
                     }
-                    
+
                     <Text>{this.state.title ?? "loading..."}</Text>
                 </View>
             )
@@ -262,7 +262,7 @@ class _ListProduct extends Component {
                         }
                     }}
                 ></FlatList>
-                <View style={{height: 8, width: "100%"}}></View>
+                <View style={{ height: 8, width: "100%" }}></View>
             </View>
 
         );

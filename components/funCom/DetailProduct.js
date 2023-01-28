@@ -51,12 +51,12 @@ const DetailProduct = (props) => {
     const [modalhtml, setModalhtml] = useState("");
     const [modaltype, setModaltype] = useState("");
     const [wishlist, setWishlist] = useState(false);
-    const [qty, setQty] = useState({sim: 1});
+    const [qty, setQty] = useState({ sim: 1 });
     const [price, setPrice] = useState("0");
 
     const getDetail = (product_id = 0) => {
         if (product_id) {
-            let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.product_detail + g_data.product_id + Config.use_params({_tha_sid: g_data._tha_sid}); //`?_tha_sid=${g_data._tha_sid}`;
+            let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.product_detail + product_id + Config.use_params({ _tha_sid: g_data._tha_sid }); //`?_tha_sid=${g_data._tha_sid}`;
             return fetch(path).then((response) => response.json()).then(
                 (data) => {
                     return data;
@@ -87,7 +87,7 @@ const DetailProduct = (props) => {
                     setData(res);
                     setRefresh(false);
                     setIsMounted(false);
-                }).catch((error)=>{
+                }).catch((error) => {
                     setData({});
                 });
             });
@@ -105,7 +105,7 @@ const DetailProduct = (props) => {
                         if (data.detail_data != undefined) {
                             return (
                                 <ScrollView
-                                    style={{ backgroundColor: Platform.OS == "web" ? "whitesmoke" : ""}}
+                                    style={{ backgroundColor: Platform.OS == "web" ? "whitesmoke" : "" }}
                                     showsVerticalScrollIndicator={false}  // ẩn thanh trượt
                                     showsHorizontalScrollIndicator={false}
                                 >
@@ -166,7 +166,7 @@ const DetailProduct = (props) => {
 
                                     <View style={{ padding: 2, flexDirection: "row" }}>
                                         <View style={{ width: "50%" }}>
-                                            <Text style={{ fontSize: 22 }}>price: {data.detail_data != undefined && (data.detail_data.type == "simple" || data.detail_data.type == "configurable") ? data.detail_data.price * qty.sim :price}</Text>
+                                            <Text style={{ fontSize: 22 }}>price: {data.detail_data != undefined && (data.detail_data.type == "simple" || data.detail_data.type == "configurable") ? data.detail_data.price * qty.sim : price}</Text>
                                         </View>
                                         {(() => {
                                             if (data.detail_data != undefined && (data.detail_data.type == "simple" || data.detail_data.type == "configurable")) {
@@ -178,7 +178,7 @@ const DetailProduct = (props) => {
                                                             style={{ borderWidth: 1, height: "auto", minHeight: 22, width: Platform.OS == "web" ? 40 : "auto", minWidth: 35, borderRadius: 4, right: 0, paddingLeft: 4 }}
                                                             keyboardType='numeric'
                                                             onChangeText={(text) => {
-                                                                setQty({sim:text});
+                                                                setQty({ sim: text });
                                                             }}
                                                             value={qty.sim + ""}
                                                             maxLength={10}  //setting limit of input
@@ -350,7 +350,7 @@ const Bunder_attr = (props) => {
                         <View>
                             <Text style={{ fontSize: 20, textDecorationLine: "underline", color: "green", fontWeight: "bold" }}>Bunder attrs</Text>
                             <FlatList
-                           
+
                                 data={bunder}
                                 keyExtractor={(item) => item.id}
                                 renderItem={({ item }) => {
@@ -459,15 +459,20 @@ const Bunder_select_item = (props) => {
                     let selects = props.parent._select;
                     selects[props._pid] = item.eid;
                     props.parent._setselect(selects);
-                        setSelecttion(!selecttion);
-                        props.ppr(!props.pprv)
+                    setSelecttion(!selecttion);
+                    props.ppr(!props.pprv)
                 }}
             />
             {/* <View style={{ flexDirection: "row", alignContent: "center", marginTop: "auto" }}> */}
             {(() => {
                 if (Platform.OS != "web") {
+                    // return(
+                    //     <View style={{ flexDirection: "row", alignContent: "center", margin: "auto", marginLeft: 'inherit' }}>
+                    //         <Text>ppppp</Text>
+                    //     </View>
+                    // )
                     return (
-                        <View style={{ flexDirection: "row", alignContent: "center", margin: "auto", marginLeft: 'inherit' }}>
+                        <View style={{ flexDirection: "row", alignContent: "center", margin: "auto", paddingTop: 6}}>
                             <View style={{ width: "70%" }}>
                                 <Text style={{ fontSize: 16 }}>{item.name}</Text>
                             </View>
@@ -816,7 +821,7 @@ const styles = StyleSheet.create({
 });
 
 export default connect(
-    state =>{
+    state => {
         return {
             g_data: state.defRe
         }

@@ -17,9 +17,13 @@ const Home = (props) => {
 
     useEffect(() => {
         if (!props.g_data._tha_sid) {
-            console.log("not has _tha_sid");
-            let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.new_sid;
-            get_sid(path);
+            try {
+                console.log("not has _tha_sid");
+                let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.new_sid;
+                get_sid(path);
+            } catch (error) {
+                console.log(error);
+            }
         } else {
             console.log("_tha_sid realy exists");
         }

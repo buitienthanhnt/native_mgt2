@@ -8,13 +8,13 @@ class ListCategory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            category_data: {},
+            category_data: null,
             refresh: true
         };
     }
     _isMounted = true;
 
-    setData = (data_id)=>{
+    setData = (data_id) => {
         this.getData(data_id).then(
             (data) => {
                 this.setState({ category_data: data, refresh: false });
@@ -34,7 +34,7 @@ class ListCategory extends Component {
 
     UNSAFE_componentWillUnmount() {
         this._isMounted = false;
-      }
+    }
 
     getData = (category_id = null) => {
         return fetch(Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.category_list + (category_id ? "?category_id=" + category_id : '')).then(
@@ -49,6 +49,13 @@ class ListCategory extends Component {
     }
 
     render() {
+        if (!this.state.category_data) {
+            return (
+                <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                    <Image style={{ width: 100, height: 100, resizeMode: "cover" }} source={require("../../assets/Images/DoubleRing-1s-200px.gif")}></Image>
+                </View>
+            )
+        }
         return (
             <View style={{ flex: 1 }}>
                 <View style={css.view_container1}>
@@ -69,9 +76,9 @@ class ListCategory extends Component {
                 <View style={css.view_container_2}>
                     {
                         (
-                            ()=>{
+                            () => {
                                 if (this.state.category_data.category_id != undefined) {
-                                    return(<ListProduct category_id={this.state.category_data.category_id} navigation = {this.props.navigation}></ListProduct>)
+                                    return (<ListProduct category_id={this.state.category_data.category_id} navigation={this.props.navigation}></ListProduct>)
                                 }
                             }
                         )()
@@ -96,9 +103,9 @@ class CategoryTop extends Component {
         this.setState({ list: this.props.data != undefined ? this.props.data : [], current_category: this.props.current_category, refresh: false });
     }
 
-    UNSAFE_componentWillUpdate(){
+    UNSAFE_componentWillUpdate() {
         if (this.state.current_category != this.props.current_category) {
-            this.setState({refresh: true});
+            this.setState({ refresh: true });
         }
 
         if (this.state.refresh) {
@@ -108,19 +115,19 @@ class CategoryTop extends Component {
 
     render() {
         return (
-            <View style={{ paddingBottom: 18}}>
+            <View style={{ paddingBottom: 18 }}>
                 <Text style={{ textAlign: "center", fontSize: 18 }}>{this.state.current_category}</Text>
                 <View style={Platform.OS == "web" ? css.top_web : css.top_mobi}>
-                    <View style={{width: "60%"}}>
+                    <View style={{ width: "60%" }}>
                         <FlatList
                             data={this.state.list}
                             keyExtractor={item => item.category_id}
                             showsVerticalScrollIndicator={false}
                             showsHorizontalScrollIndicator={false}
                             refreshing={this.state.refresh}
-                            onRefresh={()=>{
-                                getCategory().then((result)=>{
-                                    this.setState({ current_category: result.name, list: result.children});
+                            onRefresh={() => {
+                                getCategory().then((result) => {
+                                    this.setState({ current_category: result.name, list: result.children });
                                 })
                             }}
                             renderItem={({ item }) => {
@@ -128,7 +135,8 @@ class CategoryTop extends Component {
                                     <View style={css.item_view}>
                                         <TouchableOpacity
                                             onPress={() => {
-                                                getCategory(item.category_id).then((result)=>{
+                                                this.setState({ refresh: true });
+                                                getCategory(item.category_id).then((result) => {
                                                     // if (!result.children) {
                                                     //     getCategory().then((result)=>{
                                                     //         this.setState({ current_category: result.name, list: result.children});
@@ -136,10 +144,10 @@ class CategoryTop extends Component {
                                                     // }else{
                                                     //     this.setState({ current_category: result.name, list: result.children});
                                                     // }
-                                                    this.props.parent.setState({category_data: result});
+                                                    this.props.parent.setState({ category_data: result });
                                                     return result;
-                                                }).then((result)=>{
-                                                    this.props.parent.setState({category_data: result});
+                                                }).then((result) => {
+                                                    this.props.parent.setState({ category_data: result });
                                                 })
                                             }}
                                         >
@@ -151,14 +159,14 @@ class CategoryTop extends Component {
                         ></FlatList>
                     </View>
 
-                    <View style={{justifyContent: "center",alignItems: "center", width: "40%"}}>
-                            <Image source={require("../../assets/Images/uav-2760-1657582452.jpg")} style={
-                                {
-                                    width: '100%',
-                                    height: "100%",
-                                    resizeMode: "contain"
-                                }
-                            }></Image>
+                    <View style={{ justifyContent: "center", alignItems: "center", width: "40%" }}>
+                        <Image source={require("../../assets/Images/uav-2760-1657582452.jpg")} style={
+                            {
+                                width: '100%',
+                                height: "100%",
+                                resizeMode: "contain"
+                            }
+                        }></Image>
                     </View>
                 </View>
             </View>
@@ -167,7 +175,8 @@ class CategoryTop extends Component {
 }
 
 const getCategory = (category_id = null) => {
-    return fetch(Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.category_list + (category_id ? "?category_id=" + category_id : '')).then(
+    let category_request = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.category_list + (category_id ? "?category_id=" + category_id : '');
+    return fetch(category_request).then(
         (response) => response.json()
     ).then(
         (json) => {
@@ -195,11 +204,11 @@ const css = StyleSheet.create({
         padding: 2
     },
     top_web: {
-        flexDirection: "row", 
-        height: Dimensions.get("window").height/100*25, 
-        paddingBottom:18 
+        flexDirection: "row",
+        height: Dimensions.get("window").height / 100 * 25,
+        paddingBottom: 18
     },
-    top_mobi:{
+    top_mobi: {
         flexDirection: "row"
     }
 

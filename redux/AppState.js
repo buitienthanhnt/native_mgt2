@@ -5,7 +5,7 @@ let AppState = {
         { title: 'Team meeting', isFinished: false },
         { title: 'Commit tasks changed', isFinished: false }
     ],
-    product_id: 6,
+    product_id: 46,
     _tha_sid: "",
     number: 2,
     customer_data: null
