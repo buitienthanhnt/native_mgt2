@@ -5,19 +5,19 @@ import { StyleSheet, Text, View, Image, Dimensions, ScrollView, Platform, Button
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import HeadComponent from './components/classCom/HeadComponent';
-import Conten from './components/classCom/Conten';
-import BottomHead from './components/classCom/BottomHead';
-import TopConten from './components/classCom/TopConten';
+import HeadComponent from './components/Classcom/HeadComponent';
+import Conten from './components/Classcom/Conten';
+import BottomHead from './components/Classcom/BottomHead';
+import TopConten from './components/Classcom/TopConten';
 import Config from './assets/Datasource/Config';
 import DetailProduct from './components/funCom/DetailProduct';
-import ListProduct from './components/classCom/ListProduct';
+import ListProduct from './components/Classcom/ListProduct';
 import Home from './components/funCom/Home';
-import ListCategory from './components/classCom/ListCategory';
-import Login from './components/classCom/Login';
-import { UserDetail } from './components/classCom/UserDetail';
+import ListCategory from './components/Classcom/ListCategory';
+import Login from './components/Classcom/Login';
+import { UserDetail } from './components/Classcom/UserDetail';
 import Collslap from './components/funCom/Collslap';
-import Register from './components/classCom/Register';
+import Register from './components/Classcom/Register';
 
 import {createStore, combineReducers, applyMiddleware} from 'redux'; // npm install redux --save
 import thunk from 'redux-thunk';                                     // npm install redux-thunk --save (dùng cho chạy bất đồng bộ)
