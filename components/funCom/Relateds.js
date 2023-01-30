@@ -7,7 +7,7 @@ const Relateds = (props) => {
     
     const get_related_products = async (pro_id = null) => {
         if (pro_id) {
-            let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.product_related + pro_id + Config.use_params({_tha_sid: props._tha_sid});
+            let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.product_related + pro_id + Config.use_params({_tha_sid: props.g_data._tha_sid});
             return fetch(path).then((response) => response.json()).then((data) => {
                 return data;
             });

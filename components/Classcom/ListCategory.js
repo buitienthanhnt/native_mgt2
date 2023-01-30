@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, Dimensions, FlatList, StyleSheet, TouchableOpacity, Image, Platform } from "react-native";
 import Config from "../../assets/Datasource/Config";
 import ListProduct from "./ListProduct";
+import { connect } from "react-redux";
 
 class ListCategory extends Component {
 
@@ -66,9 +67,10 @@ class ListCategory extends Component {
                                     data={this.state.category_data.children != undefined ? this.state.category_data.children : []}
                                     current_category={this.state.category_data.name}
                                     parent={this}
+                                    {...this.props}
                                 ></CategoryTop>);
                             } else {
-                                return (<Text style={{ textAlign: "center" }}>loading...end of category.</Text>)
+                                return (<Text style={{ textAlign: "center", fontSize: 18, fontWeight: "bold" }}>{this.state.category_data.name}</Text>)
                             }
                         }
                     )()}
@@ -114,6 +116,19 @@ class CategoryTop extends Component {
     }
 
     render() {
+        const getCategory = (category_id = null) => {
+            let category_request = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.category_list + (category_id ? "?category_id=" + category_id : '') + Config.use_params({_tha_sid: this.props.g_data._tha_sid});
+            return fetch(category_request).then(
+                (response) => response.json()
+            ).then(
+                (json) => {
+                    return json;
+                }
+            ).catch(
+                (error) => console.log(error)
+            );
+        };
+
         return (
             <View style={{ paddingBottom: 18 }}>
                 <Text style={{ textAlign: "center", fontSize: 18 }}>{this.state.current_category}</Text>
@@ -137,13 +152,6 @@ class CategoryTop extends Component {
                                             onPress={() => {
                                                 this.setState({ refresh: true });
                                                 getCategory(item.category_id).then((result) => {
-                                                    // if (!result.children) {
-                                                    //     getCategory().then((result)=>{
-                                                    //         this.setState({ current_category: result.name, list: result.children});
-                                                    //     })
-                                                    // }else{
-                                                    //     this.setState({ current_category: result.name, list: result.children});
-                                                    // }
                                                     this.props.parent.setState({ category_data: result });
                                                     return result;
                                                 }).then((result) => {
@@ -174,19 +182,6 @@ class CategoryTop extends Component {
     }
 }
 
-const getCategory = (category_id = null) => {
-    let category_request = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.category_list + (category_id ? "?category_id=" + category_id : '');
-    return fetch(category_request).then(
-        (response) => response.json()
-    ).then(
-        (json) => {
-            return json;
-        }
-    ).catch(
-        (error) => console.log(error)
-    );
-}
-
 const css = StyleSheet.create({
     view_container1: {
         flex: 25,
@@ -214,4 +209,10 @@ const css = StyleSheet.create({
 
 });
 
-export default ListCategory;
+export default connect(
+    (state)=>{
+        return{
+            g_data: state.defRe
+        }
+    }
+)(ListCategory);

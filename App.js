@@ -21,6 +21,8 @@ import Register from './components/Classcom/Register';
 import TaskFlatList from './components/TaskFlatList';
 import AddView from './components/AddView';
 import CounterContainer from './container/CounterContainer';
+// import DrawerNavigator from './navigation/DrawerNavigator';
+import BottomTabNavigator from './navigation/BottomTabNavigator';
 // https://blog.haposoft.com/tich-hop-redux-reactnative/ redux use docs.
 // https://redux.js.org/introduction/core-concepts
 // https://blog.haposoft.com/cach-deploy-nextjs-app-len-server/
@@ -68,7 +70,12 @@ export default class App extends Component {
                 <Provider store={AppStore}>
                     <NavigationContainer>
                         <Stack.Navigator>
-                            <Stack.Screen name="Home" component={Home} options={{ title: 'Welcome' }} />
+                            {/* <DrawerNavigator></DrawerNavigator> // có dùng tabbottom và tab_drawer */} 
+
+                            <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} options={{ headerShown: false }} /> 
+                            <Stack.Screen name="DetailProduct" component={DetailProduct} />
+
+                            {/* <Stack.Screen name="Home" component={Home} options={{ title: 'Welcome' }} /> // dùng thông thường với list screen
                             <Stack.Screen name="MyStack" component={MyStack} />
                             <Stack.Screen name="DetailProduct" component={DetailProduct} />
                             <Stack.Screen name="ListCategory" component={ListCategory} navigation={this.props.navigation} />
@@ -76,7 +83,7 @@ export default class App extends Component {
                             <Stack.Screen name="Login" component={Login} />
                             <Stack.Screen name="UserDetail" component={UserDetail} />
                             <Stack.Screen name="Collslap" component={Collslap} />
-                            <Stack.Screen name="Register" component={Register} />
+                            <Stack.Screen name="Register" component={Register} /> */}
                         </Stack.Navigator>
                     </NavigationContainer>
                 </Provider>

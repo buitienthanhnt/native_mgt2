@@ -230,8 +230,8 @@ class Login extends Component {
                                                 }}>
                                                     <Text style={{ fontSize: 16, color: "red" }}>password: {'roni_cost3@example.com'}</Text>
                                                 </TouchableOpacity>
-                                                <Button title="change pro" onPress={()=>{
-                                                    Linking.openURL('tel:0702032201'); // mo qua ung dung di dong de goi.
+                                                <Button title="call for support" onPress={()=>{
+                                                    Linking.openURL('tel:0702032201'); // mở qua ứng dụng di động để gọi. doc: https://reactnative.dev/docs/linking
                                                 }}></Button>
 
                                             </View>

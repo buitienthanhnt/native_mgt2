@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useState, useEffect } from "react";
 import { View, Text, Image, Button, Dimensions, FlatList, TouchableOpacity, StyleSheet, ScrollView, TextInput, Platform, LogBox } from "react-native";
 import RenderHtml from 'react-native-render-html'; // npm install --save-prod react-native-render-html
@@ -10,7 +10,6 @@ import Collapsible from 'react-native-collapsible';  // npm install --save react
 import Config from "../../assets/Datasource/Config";
 import ImageViewer from 'react-native-image-zoom-viewer'; // npm i react-native-image-zoom-viewer --save
 import { Modal } from 'react-native';
-import { ReactNativeZoomableView } from '@dudigital/react-native-zoomable-view';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import { RadioButton } from 'react-native-paper';
 import Relateds from "./Relateds";
@@ -18,29 +17,8 @@ import Reviews from "./Reviews";
 
 import { connect } from "react-redux";
 
-
-const CONTENT = [
-    {
-        title: 'Terms and Conditions',
-        content:
-            'The following terms and conditions, together with any referenced documents (collectively, "Terms of Use") form a legal agreement between you and your employer, employees, agents, contractors and any other entity on whose behalf you accept these terms (collectively, “you” and “your”), and ServiceNow, Inc. (“ServiceNow,” “we,” “us” and “our”).',
-    },
-    {
-        title: 'Privacy Policy',
-        content:
-            'A Privacy Policy agreement is the agreement where you specify if you collect personal data from your users, what kind of personal data you collect and what you do with that data.',
-    },
-    {
-        title: 'Return Policy',
-        content:
-            'Our Return & Refund Policy template lets you get started with a Return and Refund Policy agreement. This template is free to download and use.According to TrueShip study, over 60% of customers review a Return/Refund Policy before they make a purchasing decision.',
-    },
-];
-
 const DetailProduct = (props) => {
     const { route, navigation, g_data } = props;
-    const myRef = useRef();
-    // const [id, setId] = useState(null);
     const [data, setData] = useState({});
     const [refresh, setRefresh] = useState(true);
     const [isMounted, setIsMounted] = useState(true);
@@ -53,6 +31,7 @@ const DetailProduct = (props) => {
     const [wishlist, setWishlist] = useState(false);
     const [qty, setQty] = useState({ sim: 1 });
     const [price, setPrice] = useState("0");
+    const image_height = 280;
 
     const getDetail = (product_id = 0) => {
         if (product_id) {
@@ -74,9 +53,6 @@ const DetailProduct = (props) => {
         }
     }
 
-    const image_height = 280;
-    const _bottom = Dimensions.get("window").height - image_height;
-
     useEffect(() => {
         setWishlist(false);
         if (isMounted) {
@@ -95,7 +71,7 @@ const DetailProduct = (props) => {
         }
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"]); // VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because
         // lỗi xung đột giữa scrollView và Flatlist(nó sẽ không hiện cảnh báo trên điện thoại.)
-    }, [route.params]); // [route.params] cần truyền giá trị này vào để  nhận route param trong addListener(), và tránh vòng lặp liên tục của useEffect
+    }, [route.params]); // [route.params] cần truyền giá trị này vào để  nhận route param trong addListener(), và tránh vòng lặp liên tục của useEffect.
 
     return (
         <View>
@@ -309,7 +285,6 @@ const DetailProduct = (props) => {
                                         }}></Button>
                                     </View>
 
-                                    {/* <Related pro_id={route.params.pro_id} /> */}
                                     <Reviews reviews={data.detail_data != undefined ? data.detail_data.review_content : null}></Reviews>
                                     <Relateds pro_id={data.detail_data != undefined ? data.detail_data.eid : null} navigation={navigation} data_set={setData} image_path={setImagesPath}></Relateds>
                                     <View>
@@ -619,70 +594,6 @@ const Config_attr = (props, { route, navigation }) => {
             }}
         ></FlatList>
     );
-}
-
-const get_related = async (pro_id) => {
-    let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.product_related + pro_id;
-    return fetch(path).then((response) => response.json()).then(
-        (data) => {
-            return data;
-        }
-    ).catch(
-        (error) => {
-            console.log(error);
-        }
-    );
-}
-
-const Related = (props) => {
-    const [first, setFirst] = useState(true);
-    const [related, setRelated] = useState([]);
-    let title = "Related product list you can like!!";
-
-    useEffect(() => {
-        if (props && props.pro_id && first) {
-            get_related(props.pro_id).then((result) => {
-                if (result && result.items) {
-                    // console.log(result);
-                    setRelated(result.items);
-                    setFirst(false);
-                }
-            })
-        }
-    })
-
-    return (
-        <View style={{ marginTop: 8, paddingLeft: 8 }}>
-            <Text style={{ fontSize: 16, textAlign: "left" }}>{title.toUpperCase()}</Text>
-            {(
-                () => {
-                    if (!related) {
-                        return (<Text>mmmmmmmmmmmmmm</Text>);
-                    } else {
-                        return (
-                            <FlatList
-                                data={related}
-                                horizontal={true}
-                                showsVerticalScrollIndicator={false}
-                                showsHorizontalScrollIndicator={false}
-                                // scrollEnabled = {false}
-                                keyExtractor={item => item.eid}
-                                renderItem={({ item }) => {
-                                    return (
-                                        <View>
-                                            <View>
-                                                <Image source={{ uri: item.image_path }} style={{ width: 180, height: 180, marginRight: 10, resizeMode: "cover", borderRadius: 12 }}></Image>
-                                            </View>
-                                        </View>
-                                    )
-                                }}
-                            ></FlatList>
-                        )
-                    }
-                }
-            )()}
-        </View>
-    )
 }
 
 const Conslap = (props) => {

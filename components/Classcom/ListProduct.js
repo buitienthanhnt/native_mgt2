@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, FlatList, Platform, TextInput } from "react-native";
 import Config from '../../assets/Datasource/Config';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import { connect } from "react-redux";
 
 class ListProduct extends Component {
     constructor(props) {
@@ -11,7 +12,7 @@ class ListProduct extends Component {
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <_ListProduct navigation={this.props.navigation} category_id={this.props.category_id != undefined ? this.props.category_id : this.props.route.params.category_id}></_ListProduct>
+                <_ListProduct navigation={this.props.navigation} category_id={this.props.category_id != undefined ? this.props.category_id : this.props.route.params.category_id} {...this.props}></_ListProduct>
             </View>
         );
     }
@@ -38,7 +39,6 @@ class _ListProduct extends Component {
     _isMounted = true;
 
     UNSAFE_componentWillMount() {
-        // console.log(this.props);
         if (this.props.category_id) {
             this.getdata(this.props.category_id, 1, Config.page_size).then((data) => {
                 if (this._isMounted) {
@@ -67,6 +67,18 @@ class _ListProduct extends Component {
         this._isMounted = false;
     }
 
+    getdata = function (category_id = 5, _p = 1, p_size = Config.page_size) {
+        let request_url = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.product_list + category_id + Config.use_params({_p: _p, p_size: p_size, _tha_sid: this.props.g_data._tha_sid})
+        //"?_p=" + _p + "&p_size=" + p_size ;
+        return fetch(request_url).then(
+            (response) => response.json()
+        ).then(
+            (json) => { return json; }
+        ).catch(
+            (error) => console.log(error)
+        );
+    }
+
     UNSAFE_componentWillUpdate() {
         if (this.props.category_id) {
             if (this.state.refresh == false && this.state.update_refresh && (this.state.category_id != this.props.category_id)) {
@@ -84,16 +96,6 @@ class _ListProduct extends Component {
                 )
             }
         }
-    }
-
-    getdata = function (category_id = 5, _p = 1, p_size = Config.page_size) {
-        return fetch(Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.product_list + category_id + "?_p=" + _p + "&p_size=" + p_size).then(
-            (response) => response.json()
-        ).then(
-            (json) => { return json; }
-        ).catch(
-            (error) => console.log(error)
-        );
     }
 
     render() {
@@ -387,4 +389,10 @@ const css = StyleSheet.create({
     }
 });
 
-export default ListProduct;
+export default connect(
+    (state)=>{
+        return{
+            g_data: state.defRe
+        }
+    }
+)(ListProduct);
