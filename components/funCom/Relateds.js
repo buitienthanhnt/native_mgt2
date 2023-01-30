@@ -4,10 +4,10 @@ import Config from "../../assets/Datasource/Config";
 import { connect } from "react-redux";
 
 const Relateds = (props) => {
-    
+
     const get_related_products = async (pro_id = null) => {
         if (pro_id) {
-            let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.product_related + pro_id + Config.use_params({_tha_sid: props._tha_sid});
+            let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.product_related + pro_id + Config.use_params({ _tha_sid: props._tha_sid });
             return fetch(path).then((response) => response.json()).then((data) => {
                 return data;
             });
@@ -36,14 +36,14 @@ const Relateds = (props) => {
             })
         }
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-    },[props.pro_id])
+    }, [props.pro_id])
 
     return (
-        <View style={{paddingTop: 6}}>
+        <View style={{ paddingTop: 6 }}>
             <View style={{ height: 1, backgroundColor: "black", width: Dimensions.get("window").width }}></View>{/* đường kẻ ngang */}
-            <Text style={{fontSize:16, textAlign: "left", textDecorationLine: "underline"}}>{title.toLocaleUpperCase()}</Text>
+            <Text style={{ fontSize: 16, textAlign: "left", textDecorationLine: "underline" }}>{title.toLocaleUpperCase()}</Text>
             <FlatList
-                style={{marginTop: 6, marginLeft: 8}}
+                style={{ marginTop: 6, marginLeft: 8 }}
                 data={list}
                 horizontal={true}
                 showsVerticalScrollIndicator={false}
@@ -53,8 +53,9 @@ const Relateds = (props) => {
                 renderItem={({ item }) => {
                     return (
                         <View>
-                            <TouchableOpacity onPress={()=>{
+                            <TouchableOpacity onPress={() => {
                                 console.log(item.eid);
+                                // props.navigation.navigate("DetailProduct", { pro_id: item.eid }); // khong chay do cung trong 1 man hinh
                                 getDetail(item.eid).then((res) => {
                                     props.image_path([]);
                                     props.data_set(res);
@@ -100,8 +101,8 @@ const css = StyleSheet.create({
 });
 
 export default connect(
-    state=>{
-        return{
+    state => {
+        return {
             g_data: state.defRe
         };
     }

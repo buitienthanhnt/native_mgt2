@@ -8,7 +8,8 @@ let AppState = {
     product_id: 46,
     _tha_sid: "",
     number: 2,
-    customer_data: null
+    customer_data: null,
+    cart_data: null
 };
 
 export default AppState;
