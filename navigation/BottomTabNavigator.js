@@ -46,7 +46,7 @@ const BottomTabNavigator = (props) => {
   );
 };
 const Stack = createNativeStackNavigator();
-const ScrAll = () => {
+const ScrAll = () => { // dùng nhiều screen trong cùng 1 bottom_tab_screen
   return (
     <Stack.Navigator>
       <Stack.Screen name="Scr1" component={Scr1} options={{ headerShown: false }} />
