@@ -37,8 +37,6 @@ class Login extends Component {
 
     login = async function () {
         this.setState({ load_login: true })
-        let user = this.state.user;
-        let pass = this.state.pass;
         let request_login = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.login_post;
         let params = await Config.use_params({ user_name: this.state.user, pass: this.state.pass });
 
@@ -230,7 +228,7 @@ class Login extends Component {
                                                 }}>
                                                     <Text style={{ fontSize: 16, color: "red" }}>password: {'roni_cost3@example.com'}</Text>
                                                 </TouchableOpacity>
-                                                <Button title="call for support" onPress={()=>{
+                                                <Button title="call for support" onPress={() => {
                                                     Linking.openURL('tel:0702032201'); // mở qua ứng dụng di động để gọi. doc: https://reactnative.dev/docs/linking
                                                 }}></Button>
 
@@ -277,21 +275,26 @@ const css = StyleSheet.create({
     }
 });
 
-const update_sid = (dispatch, _sid)=>{
-    dispatch({type: "UPDATE_SID", sid: _sid});
+const update_sid = (dispatch, _sid) => {
+    dispatch({ type: "UPDATE_SID", sid: _sid });
 };
 
 export default connect(
-    (appState)=>{
+    (appState) => {
         return {
             g_data: appState.defRe
         }
     },
-    (dispatch)=>{
+    (dispatch) => {
         return {
-            change_product: dispatch({type: "CHANGE_PRODUCT", product_id: 30}),
-            update_sid: (_sid)=>{
-                dispatch({type: "UPDATE_SID", sid: _sid});
+            change_product: () => {
+                dispatch({ type: "CHANGE_PRODUCT", product_id: 30 }); // nên được đặt trong hàm như này, nếu gọi trực tiếp: 
+                // change_product=>dispatch({type: "CHANGE_PRODUCT", product_id: 30}) có thể cảnh báo lỗi:
+                // Warning: Cannot update a component (`Connect(BottomTabNavigator)`) while rendering a different component (`Connect(Login)`). 
+                // To locate the bad setState() call inside `Connect(Login)`, follow the stack trace as described in
+            },
+            update_sid: (_sid) => {
+                dispatch({ type: "UPDATE_SID", sid: _sid });
             }
         }
     }

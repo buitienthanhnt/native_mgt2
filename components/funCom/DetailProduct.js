@@ -74,14 +74,14 @@ const DetailProduct = (props) => {
     }, [route.params]); // [route.params] cần truyền giá trị này vào để  nhận route param trong addListener(), và tránh vòng lặp liên tục của useEffect.
 
     return (
-        <View>
-            {
+        <View style={{flex:1}}> 
+            { // <View> bên trên cần flex:1 để có thể cuộn được trên website cho <scroolView>(nếu không dễ bị lỗi.)
                 (
                     () => {
                         if (data.detail_data != undefined) {
                             return (
                                 <ScrollView
-                                    style={{ backgroundColor: Platform.OS == "web" ? "whitesmoke" : "" }}
+                                    style={{ backgroundColor: Platform.OS == "web" ? "whitesmoke" : "", flex:1 }}
                                     showsVerticalScrollIndicator={false}  // ẩn thanh trượt
                                     showsHorizontalScrollIndicator={false}
                                 >
