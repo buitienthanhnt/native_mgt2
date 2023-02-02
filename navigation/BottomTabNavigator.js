@@ -6,9 +6,9 @@ import { View, Text, Button, StatusBar } from "react-native";
 
 import Home from "../components/funCom/Home";
 import ListCategory from "../components/Classcom/ListCategory";
-import DetailProduct from "../components/funCom/DetailProduct";
 import Login from "../components/Classcom/Login";
 import UserDetail from "../components/Classcom/UserDetail";
+import DetailProduct from "../components/funCom/DetailProduct";
 
 import { connect } from "react-redux";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -123,6 +123,5 @@ export default connect(
     }
 )(BottomTabNavigator);
 // tar -czvf acc.tar.gz report
-
 // nén folder khi không có zip(dung tar):
 // tar -czvf ~/app.tar.gz code/*   (tạo mới 1 bản sao ở: ~/ tên là: app.tả.gz (nếu không có quyền nén tại mục chứa))
