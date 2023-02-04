@@ -28,6 +28,7 @@ const request_data = {
         update_qty:      "cart/updateQty",  // PUT   : {{url}}/{{res}}/V1/cart/updateQty?_tha_sid={{_tha_sid}}
         empty_cart:      "cart/emptyCart"   // DELETE: {{url}}/{{res}}/V1/cart/emptyCart?_tha_sid={{_tha_sid}}
     },
+    // base_request : this.http+this.ip+this.uri_241+this.rest+this.v1, // not run
     webview_url: {
         new_acc: "https://magento24.jmango.vn/index.php/default/customer/account/create/"
     },

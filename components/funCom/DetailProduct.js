@@ -15,7 +15,16 @@ import { RadioButton } from 'react-native-paper';
 import Relateds from "./Relateds";
 import Reviews from "./Reviews";
 
+import axios from 'axios'; // npm install axios
 import { connect } from "react-redux";
+
+const add_to_cart = async (props, params)=>{
+    // console.log(props);
+    var request = Config.http+Config.ip+Config.uri_241+Config.rest+Config.v1+Config.api.add_cart+Config.use_params(params);
+    let data = await axios.post(request);
+    // console.log(data);
+    props.up_date_cart(data.data);
+}
 
 const DetailProduct = (props) => {
     const { route, navigation, g_data } = props;
@@ -280,8 +289,12 @@ const DetailProduct = (props) => {
 
                                     <View style={{ marginBottom: 6 }}>
                                         <Button title="add to cart" onPress={() => {
-                                            console.log("add to cart function");
-                                            console.log(select, qty);
+                                            var _params = {_tha_sid: props.g_data._tha_sid}
+                                            if (data.detail_data.type == "simple") {
+                                                _params = {..._params, qty: qty.sim, product: data.detail_data.eid};
+                                            }
+                                            add_to_cart(props, _params);
+                                            // console.log(select, qty);
                                         }}></Button>
                                     </View>
 
@@ -738,6 +751,13 @@ export default connect(
         }
     },
     dispatch => {
-        return {};
+        return {
+            up_date_cart: (cart_data)=>{
+                dispatch({
+                    type: "UPDATE_CART",
+                    cart_data: cart_data
+                })
+            }
+        };
     }
 )(DetailProduct);

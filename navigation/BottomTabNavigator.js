@@ -9,12 +9,14 @@ import ListCategory from "../components/Classcom/ListCategory";
 import Login from "../components/Classcom/Login";
 import UserDetail from "../components/Classcom/UserDetail";
 import DetailProduct from "../components/funCom/DetailProduct";
+import Scr1 from "./Scr1";
 
 import { connect } from "react-redux";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Tab = createBottomTabNavigator();
 const BottomTabNavigator = (props) => {
+
     return (
         <Tab.Navigator screenOptions={
             ({ route }) => ({
@@ -46,7 +48,7 @@ const BottomTabNavigator = (props) => {
 
             <Tab.Screen name="ScrAll" component={ScrAll} tabBarOptions={{ showLabel: false, }}
                 options={{
-                    tabBarBadge: props.g_data.number,
+                    tabBarBadge: props.g_data.cart_data != null ? props.g_data.cart_data.item_qty : null,
                     tabBarLabel: 'Cart',
                     tabBarIcon: ({ focused, color, size }) => <Ionicons name={"cart"} size={26} color={color} />
                 }}
@@ -85,21 +87,6 @@ const Account = (props) => {
     );
 };
 
-const Scr1 = (props) => {
-    const { navigation } = props;
-    return (
-        <View>
-            {/* <StatusBar backgroundColor={"violet"}></StatusBar> */}
-            <Button title="Scr12" onPress={() => {
-                navigation.navigate("Scr12", { customer_id: 1 });
-            }}></Button><Text>{"\n"}</Text>
-
-            <Button title="Scr13" onPress={() => {
-                navigation.navigate("Scr13", { customer_id: 1 });
-            }}></Button><Text>{"\n"}</Text>
-        </View>
-    )
-};
 const Scr12 = () => {
     return (
         <View>
@@ -107,10 +94,15 @@ const Scr12 = () => {
         </View>
     )
 };
-const Scr13 = () => {
+const Scr13 = (props) => {
     return (
         <View>
             <Text>Scr13</Text>
+            <Button title="props"
+                onPress={() => {
+                    console.log("123");
+                }}></Button>
+
         </View>
     )
 };

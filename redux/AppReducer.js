@@ -16,11 +16,16 @@ const Reducer = (state = AppState, action) => {
             return { ...state, data: [...newTaskList, newTask] };
             break;
         case 'CHANGE_PRODUCT':
-            return { ...state, product_id: action.product_id};
+            return { ...state, product_id: action.product_id };
             break;
         case 'UPDATE_SID':
-            return{
+            return {
                 ...state, _tha_sid: action.sid
+            };
+            break;
+        case 'UPDATE_CART':
+            return {
+                ...state, cart_data: action.cart_data
             };
             break;
         default:
@@ -29,16 +34,16 @@ const Reducer = (state = AppState, action) => {
     return state;
 };
 
-const NumberReducer = (state = AppState, action)=>{
+const NumberReducer = (state = AppState, action) => {
     let new_num;
     switch (action.type) {
         case "ADD_NUMBER":
-            new_num = state.number+=1;
-            return {...state, number: new_num};
+            new_num = state.number += 1;
+            return { ...state, number: new_num };
             break;
         case "SUB_NUMBER":
-            new_num = state.number-=1;
-            return {...state, number: new_num};
+            new_num = state.number -= 1;
+            return { ...state, number: new_num };
             break;
 
         default:
@@ -47,4 +52,4 @@ const NumberReducer = (state = AppState, action)=>{
     return state;
 };
 
-export {Reducer, NumberReducer};
+export { Reducer, NumberReducer };
