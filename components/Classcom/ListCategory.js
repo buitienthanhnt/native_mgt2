@@ -70,7 +70,25 @@ class ListCategory extends Component {
                                     {...this.props}
                                 ></CategoryTop>);
                             } else {
-                                return (<Text style={{ textAlign: "center", fontSize: 18, fontWeight: "bold" }}>{this.state.category_data.name}</Text>)
+                                return (
+                                    <View>
+                                        <Text style={{ textAlign: "center", fontSize: 18, fontWeight: "bold" }}>{this.state.category_data.name} {"\n"}</Text>
+                                        <View >
+                                            <TouchableOpacity
+                                                style={{ 
+                                                    backgroundColor: "#2596be", 
+                                                    borderRadius: 4,
+                                                    justifyContent: "center", 
+                                                    flexDirection: "row",
+                                                    width: "100%"
+                                                }}
+                                                onPress={() => {
+                                                    console.log("navigate to root");
+                                                }}>
+                                                <Text style={{fontSize: 20, fontWeight: "bold"}}> root category</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>)
                             }
                         }
                     )()}
@@ -117,7 +135,7 @@ class CategoryTop extends Component {
 
     render() {
         const getCategory = (category_id = null) => {
-            let category_request = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.category_list + (category_id ? "?category_id=" + category_id : '') + Config.use_params({_tha_sid: this.props.g_data._tha_sid});
+            let category_request = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.category_list + (category_id ? "?category_id=" + category_id : '') + Config.use_params({ _tha_sid: this.props.g_data._tha_sid });
             return fetch(category_request).then(
                 (response) => response.json()
             ).then(
@@ -210,8 +228,8 @@ const css = StyleSheet.create({
 });
 
 export default connect(
-    (state)=>{
-        return{
+    (state) => {
+        return {
             g_data: state.defRe
         }
     }

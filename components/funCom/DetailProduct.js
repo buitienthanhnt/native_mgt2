@@ -85,7 +85,7 @@ const DetailProduct = (props) => {
                                     showsVerticalScrollIndicator={false}  // ẩn thanh trượt
                                     showsHorizontalScrollIndicator={false}
                                 >
-                                    <Text style={{ fontSize: 18 }}>{(data && data.detail_data != undefined) ? data.detail_data.name : "..."}</Text>
+                                    <Text style={{ fontSize: 18, paddingLeft: 8 }}>{(data && data.detail_data != undefined) ? data.detail_data.name : "..."}</Text>
                                     <Modal visible={showModel} transparent={true} >
                                         <View
                                             style={{ flex: 1 }}>
