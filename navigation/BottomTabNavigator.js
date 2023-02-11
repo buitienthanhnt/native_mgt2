@@ -9,7 +9,7 @@ import ListCategory from "../components/Classcom/ListCategory";
 import Login from "../components/Classcom/Login";
 import UserDetail from "../components/Classcom/UserDetail";
 import DetailProduct from "../components/funCom/DetailProduct";
-import Scr1 from "./Scr1";
+import Cart from "./Cart";
 
 import { connect } from "react-redux";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -60,7 +60,7 @@ const Stack = createNativeStackNavigator();
 const ScrAll = () => { // dùng nhiều screen trong cùng 1 bottom_tab_screen
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Scr1" component={Scr1} options={{ headerShown: false }} />
+            <Stack.Screen name="Cart" component={Cart} options={{ headerShown: false }} />
             <Stack.Screen name="Scr12" component={Scr12} />
             <Stack.Screen name="Scr13" component={Scr13} options={{
                 headerShown: false // ẩn thanh trên(mũi tên quay lại màn trước) của màn hình
