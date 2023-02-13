@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity, BackHandler } from 'react-native';
 import Config from "../../assets/Datasource/Config";
 import { connect } from 'react-redux';
 
@@ -20,7 +20,7 @@ const Home = (props) => {
             try {
                 console.log("not has _tha_sid");
                 let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.new_sid;
-                get_sid(path);
+                // get_sid(path);
             } catch (error) {
                 console.log(error);
             }
@@ -34,7 +34,9 @@ const Home = (props) => {
             <View style={{ flex: 20 }}>
                 <TouchableOpacity onPress={() => {
                     // navigation.navigate("ListProduct",{category_id: 4});
-                    navigation.navigate("DetailProduct", { pro_id: product_id });
+                    // navigation.navigate("DetailProduct", { pro_id: product_id });
+                    BackHandler.exitApp(); // thoát app
+
                 }} style={{ width: "100%", height: "100%" }}>
                     <Image source={require("../../assets/Images/IMG_20220519_163056.jpg")} style={{ width: "100%", height: "100%", resizeMode: "cover" }}></Image>
                 </TouchableOpacity>
