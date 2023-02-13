@@ -26,7 +26,9 @@ const request_data = {
         get_cart:        "cart/data",       // GET   : {{url}}/{{res}}/V1/cart/data?_tha_sid={{_tha_sid}}
         add_cart:        "cart/addToCart",  // POST  : {{url}}/{{res}}/V1/cart/addToCart?_tha_sid={{_tha_sid}}
         update_qty:      "cart/updateQty",  // PUT   : {{url}}/{{res}}/V1/cart/updateQty?_tha_sid={{_tha_sid}}
-        empty_cart:      "cart/emptyCart"   // DELETE: {{url}}/{{res}}/V1/cart/emptyCart?_tha_sid={{_tha_sid}}
+        empty_cart:      "cart/emptyCart",  // DELETE: {{url}}/{{res}}/V1/cart/emptyCart?_tha_sid={{_tha_sid}}
+        get_currency:    "getCurrencyList", // GET   : {{url}}/{{res}}/V1/getCurrencyList?_tha_sid={{_tha_sid}}
+        set_currency:    "updateCurrency",  // POST  : {{url}}/{{res}}/V1/updateCurrency?_tha_sid={{_tha_sid}}&currency=[]
     },
     // base_request : this.http+this.ip+this.uri_241+this.rest+this.v1, // not run
     webview_url: {
