@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Dimensions, FlatList, StyleSheet, TouchableOpacity, Image, Platform } from "react-native";
+import { View, Text, Dimensions, FlatList, StyleSheet, TouchableOpacity, Image, Platform, StatusBar } from "react-native";
 import Config from "../../assets/Datasource/Config";
 import ListProduct from "./ListProduct";
 import { connect } from "react-redux";
@@ -59,6 +59,7 @@ class ListCategory extends Component {
         }
         return (
             <View style={{ flex: 1 }}>
+                <StatusBar></StatusBar>
                 <View style={css.view_container1}>
                     {(
                         () => {
