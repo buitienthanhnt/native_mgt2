@@ -53,6 +53,7 @@ const BottomTabNavigator = (props) => {
                 options={{
                     tabBarBadge: props.g_data.cart_data != null ? props.g_data.cart_data.item_qty : null,
                     tabBarLabel: 'Cart',
+                    tabBarShowLabel: false,
                     tabBarIcon: ({ focused, color, size }) => <Ionicons name={"cart"} size={26} color={color} />
                 }}
             />
