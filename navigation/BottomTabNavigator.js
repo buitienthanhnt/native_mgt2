@@ -23,10 +23,13 @@ const BottomTabNavigator = (props) => {
                 tabBarActiveTintColor: 'tomato', // màu icon mặc định là xanh, dùng như này sẽ là màu cà chua.
                 tabBarInactiveTintColor: 'gray', // gray cũng là màu mặc định luôn.
                 headerShown: false // ẩn phần tiêu đề bên trên của: Tab.Navigator
-            })}>
+            })}
+            // tabBarOptions={{ showLabel: false }} // ẩn bottom_tab title(tiêu đề của thanh dưới trang)
+        >
             <Tab.Screen name="Home" component={Home}
                 options={{
                     tabBarLabel: 'Home',
+                    tabBarShowLabel: false, // ẩn bottom_tab title(tiêu đề của thanh dưới trang)
                     tabBarIcon: ({ focused, color, size }) => {
                         return (<Ionicons name={"home"} size={26} color={color} />);
                     }

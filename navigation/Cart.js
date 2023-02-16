@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Button, StatusBar, ScrollView, StyleSheet, Image, Dimensions, LogBox, TextInput, TouchableOpacity, Platform } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { View, Text, Button, StatusBar, ScrollView, StyleSheet, Image, Dimensions, LogBox, TextInput, TouchableOpacity, Platform, FlatList } from "react-native";
+import { Tooltip } from 'react-native-elements'; //npm install react-native-elements + npm i --save react-native-vector-icons + npm install react-native-safe-area-context
+// npm install react-native-paper
 import { connect } from "react-redux";
 import cart_val from "./cart_data";
 
@@ -16,19 +17,28 @@ const Cart = (props) => {
         return (
             <View style={{ flex: 1 }}>
                 <StatusBar></StatusBar>
-                <Text style={css.cart_title}>cart data</Text>
-                <ScrollView
-                    showsVerticalScrollIndicator={false}
-                    showsHorizontalScrollIndicator={false}
-                >
-                    <View>
-                        <Cart_item items={cart_data.items} ></Cart_item>
-                    </View>
-                </ScrollView>
-                <Cart_price prices={cart_data.prices}></Cart_price>
-                <Button title="show cart_data" onPress={() => {
+                <View style={{ flex: 70 }}>
+                    <Text style={css.cart_title}>cart data</Text>
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                    >
+                        <View>
+                            <Cart_item items={cart_data.items} ></Cart_item>
+                        </View>
+                    </ScrollView>
+                </View>
+                <View style={{ flex: 30 }}>
+                    <Cart_price prices={cart_data.prices}></Cart_price>
+                </View>
+
+                {/* <Button title="show cart_data" onPress={() => {
                     console.log(cart_data);
-                }}></Button>
+                }}></Button> */}
+                {/* skipAndroidStatusBar={true} để không bị lặp lại nội dung khi hiển thị. */}
+                 <Tooltip popover={<Text>tooooool</Text>} withOverlay={false} withPointer={true} skipAndroidStatusBar={true}>
+                    <Text style={{ fontSize: 17, backgroundColor: "red", alignSelf: 'flex-start' }}>asdadsd</Text>
+                    </Tooltip>
             </View>
         )
     }
@@ -72,26 +82,28 @@ const Cart_item = (props) => {
 
 const Item_data = (props) => {
     const [qty, setQty] = useState(0);
-    useEffect(()=>{
+    useEffect(() => {
         setQty(props.item_qty);
     }, []);
     return (
         <View>
             <View style={{ padding: 8, flexDirection: "row" }}>
-                <View style={{ width: "45%"}}>
+                <View style={{ width: "45%" }}>
                     <Image source={{ uri: props.image_path }} style={css.item_image} resizeMode="cover"></Image>
                 </View>
                 <View style={{ width: "50%" }}>
-                    <Text style={{ fontSize: 17 }}>{props.name}</Text>
+                    <Tooltip popover={<Text>{props.name}</Text>} withOverlay={false} skipAndroidStatusBar={true}>
+                        <Text style={{ fontSize: 17 }}>{props.name}</Text>
+                    </Tooltip>
                     <Text style={{ fontSize: 17 }}>price: {props.prices[0].value}</Text>
                     <View style={{ flexDirection: "row" }}>
                         {/* <Text style={{ fontSize: 17, fontWeight: "bold" }}>qty: {item.item_qty}</Text> */}
                         <View style={{ textAlign: "center", justifyContent: "center" }}>
                             <TouchableOpacity onPress={() => {
                                 console.log("sub qty");
-                                if (qty>=1) {
+                                if (qty >= 1) {
                                     let _qty = qty;
-                                    setQty(_qty-=1)
+                                    setQty(_qty -= 1)
                                 }
                             }}>
                                 <Text style={{ fontSize: 20, fontWeight: "900", marginRight: 6 }}>-</Text>
@@ -99,7 +111,7 @@ const Item_data = (props) => {
                         </View>
                         <TextInput
                             value={String(qty)}
-                            // defaultValue={String(item.item_qty)} // không chạy 
+                            // defaultValue={String(item.item_qty)} // không chạy
                             onChangeText={(value) => { setQty(value) }}
                             style={{ width: 30, height: 30, borderWidth: 1, borderRadius: 6, padding: 4, paddingLeft: 10 }}
                             keyboardType="numeric">
@@ -108,7 +120,7 @@ const Item_data = (props) => {
                             <TouchableOpacity onPress={() => {
                                 console.log("add qty");
                                 let _qty = qty;
-                                setQty(_qty+=1);
+                                setQty(_qty += 1);
                             }}>
                                 <Text style={{ fontSize: 20, paddingLeft: 5, fontWeight: "600" }}>+</Text>
                             </TouchableOpacity>
