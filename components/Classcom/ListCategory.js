@@ -45,25 +45,35 @@ class ListCategory extends Component {
                 return json;
             }
         ).catch(
-            (error) => console.log(error)
+            (error) => {
+                console.log(error);
+                this.setState({refresh: false});
+            }
         );
     }
 
     render() {
-        if (!this.state.category_data) {
+        if (this.state.refresh) {
             return (
                 <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
                     <Image style={{ width: 100, height: 100, resizeMode: "cover" }} source={require("../../assets/Images/DoubleRing-1s-200px.gif")}></Image>
                 </View>
             )
         }
+        // if (!this.state.category_data) {
+        //     return (
+        //         <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+        //             <Image style={{ width: 100, height: 100, resizeMode: "cover" }} source={require("../../assets/Images/DoubleRing-1s-200px.gif")}></Image>
+        //         </View>
+        //     )
+        // }
         return (
             <View style={{ flex: 1 }}>
                 <StatusBar></StatusBar>
                 <View style={css.view_container1}>
                     {(
                         () => {
-                            if (this.state.category_data.children != undefined) {
+                            if (this.state.category_data && this.state.category_data.children != undefined) {
                                 return (<CategoryTop
                                     data={this.state.category_data.children != undefined ? this.state.category_data.children : []}
                                     current_category={this.state.category_data.name}
@@ -73,7 +83,7 @@ class ListCategory extends Component {
                             } else {
                                 return (
                                     <View>
-                                        <Text style={{ textAlign: "center", fontSize: 18, fontWeight: "bold" }}>{this.state.category_data.name} {"\n"}</Text>
+                                        <Text style={{ textAlign: "center", fontSize: 18, fontWeight: "bold" }}>{this.state.category_data ? this.state.category_data.name : ""} {"\n"}</Text>
                                         <View >
                                             <TouchableOpacity
                                                 style={{ 
@@ -98,7 +108,7 @@ class ListCategory extends Component {
                     {
                         (
                             () => {
-                                if (this.state.category_data.category_id != undefined) {
+                                if (this.state.category_data && this.state.category_data.category_id != undefined) {
                                     return (<ListProduct category_id={this.state.category_data.category_id} navigation={this.props.navigation}></ListProduct>)
                                 }
                             }
