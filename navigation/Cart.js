@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Button, StatusBar, ScrollView, StyleSheet, Image, Dimensions, LogBox, TextInput, TouchableOpacity, Platform, FlatList } from "react-native";
+import { View, Text, Button, StatusBar, ScrollView, RefreshControl, StyleSheet, Image, Dimensions, LogBox, TextInput, TouchableOpacity, Platform, FlatList } from "react-native";
 import { Tooltip } from 'react-native-elements'; //npm install react-native-elements + npm i --save react-native-vector-icons + npm install react-native-safe-area-context
-// npm install react-native-paper
+// import { TextInput } from 'react-native-paper'; // npm install react-native-paper
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Collapsible from 'react-native-collapsible';  // npm install --save react-native-collapsible
 
@@ -12,9 +12,10 @@ const cart_data = cart_val;
 
 const Cart = (props) => {
     const { navigation } = props;
-    const [discount, setDiscount] = useState(true);
-    const [discountlist, setDiscountlist] = useState(["111", "2000", "567"]);
+    const [refres, setRefres] = useState(false);
+    const [cart, setCart] = useState(null);
     useEffect(() => {
+        setCart(cart_data.items);
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"]); // VirtualizedLists should never be nested inside plain ScrollViews with the same
     }, [props]);
 
@@ -23,60 +24,19 @@ const Cart = (props) => {
             <View style={{ flex: 1 }}>
                 <StatusBar></StatusBar>
                 <View style={{ flex: 70, marginBottom: 6 }}>
-                    <Text style={css.cart_title}>cart data</Text>
+                    <Text style={css.cart_title}>Cart data</Text>
                     <ScrollView
+                    
+                        refreshControl={<RefreshControl refreshing={refres} onRefresh={()=>{
+                            setCart([...cart_data.items]);
+                        }} />}
                         showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
                     >
-                        {/* <View> */}
-                        <Cart_item items={cart_data.items} ></Cart_item>
-                        {/* </View> */}
+                        <Cart_item items={cart} ></Cart_item>
                     </ScrollView>
                 </View>
-                <View style={{ paddingLeft: 8, justifyContent: "flex-start" }}>
-                    <View >
-                        <Text style={{ textDecorationLine: "underline" }}
-                            onPress={() => {
-                                setDiscount(!discount);
-                            }}>Apply discount:</Text>
-                        <View style={{ flexDirection: "row" }}>
-                            <FlatList data={discountlist} horizontal={true} keyExtractor={(item) => item}
-                                renderItem={({ item, index }) => {
-                                    return (
-                                        <View style={{ flexDirection: "row" }}>
-                                            <Text style={{ marginLeft: 12, fontSize: 16, textDecorationLine: "underline" }}>{item}</Text>
-                                            <TouchableOpacity onPress={() => {
-                                                let _discountlist = discountlist;
-                                                _discountlist.splice(index, 1);
-                                                setDiscountlist(_discountlist);
-                                            }}>
-                                                <Text style={{ color: "red", fontSize: 12 }}>X</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    );
-                                }}></FlatList>
-                        </View>
-
-                    </View>
-                    <View>
-                        <Collapsible collapsed={discount}>
-                            <View style={{ flexDirection: "row", marginTop: 4 }}>
-                                <TextInput
-                                    style={{
-                                        borderWidth: 1, height: 24,
-                                        width: "40%", paddingLeft: 4, borderRadius: 6
-                                    }}></TextInput>
-                                <TouchableOpacity onPress={() => {
-                                    console.log("apply dscount code");
-                                }}
-                                    style={{ marginLeft: 8 }}
-                                >
-                                    <FontAwesome5Icon name="paper-plane" size={21}></FontAwesome5Icon>
-                                </TouchableOpacity>
-                            </View>
-                        </Collapsible>
-                    </View>
-                </View>
+                <DiscountElement></DiscountElement>
                 <View style={{ flex: 30 }}>
                     <View style={{ justifyContent: "flex-end", height: "100%" }}>
                         <Cart_price prices={cart_data.prices}></Cart_price>
@@ -112,18 +72,87 @@ const Cart = (props) => {
     )
 };
 
+const DiscountElement = (props) => {
+    const [discount, setDiscount] = useState(true);
+    const [discountcode, setDiscountcode] = useState("");
+    const [discountlist, setDiscountlist] = useState([]);
+    return (
+        <View style={{ paddingLeft: 8, justifyContent: "flex-start", marginTop: 5 }}>
+            <View >
+                <Text style={{ textDecorationLine: "underline", color: "green" }}
+                    onPress={() => {
+                        setDiscount(!discount);
+                    }}>Apply discount:</Text>
+                <DiscountItem _discountlist={discountlist} _setDiscountlist={setDiscountlist}></DiscountItem>
+            </View>
+            <View>
+                <Collapsible collapsed={discount}>
+                    <View style={{ flexDirection: "row", marginTop: 4 }}>
+                        <TextInput
+                            underlineColorAndroid="transparent"
+                            value={discountcode}
+                            onChangeText={(text) => {
+                                setDiscountcode(text);
+                            }}
+                            style={{
+                                borderWidth: 1, height: 24,
+                                width: "40%", paddingLeft: 6, borderRadius: 6
+                            }}></TextInput>
+                        <TouchableOpacity onPress={() => {
+                            if (discountcode) {
+                                setDiscountlist([...discountlist, discountcode]);
+                                setDiscountcode("");
+                            }
+                        }}
+                            style={{ marginLeft: 8 }}
+                        >
+                            <FontAwesome5Icon name="paper-plane" size={21}></FontAwesome5Icon>
+                        </TouchableOpacity>
+                    </View>
+                </Collapsible>
+            </View>
+        </View>
+    );
+}
+
+const DiscountItem = (props) => {
+    useEffect(() => {
+    }, [props]);
+
+    return (
+        <View style={{ flexDirection: "row" }}>
+            <FlatList data={props._discountlist} horizontal={true} keyExtractor={(item, index) => index}
+                renderItem={({ item, index }) => {
+                    return (
+                        <View style={{ flexDirection: "row" }}>
+                            <Text style={{ marginLeft: 12, fontSize: 16, textDecorationLine: "underline" }}>{item}</Text>
+                            <TouchableOpacity onPress={() => {
+                                let _discountlist = props._discountlist;
+                                _discountlist.splice(index, 1);
+                                props._setDiscountlist([..._discountlist]); // cần đặt [...arr] để  tạo mảng mới cho hook render lại nếu không sẽ có thể bị lỗi không render lại
+                            }}>
+                                <Text style={{ color: "red", fontSize: 12 }}>X</Text>
+                            </TouchableOpacity>
+                        </View>
+                    );
+                }}></FlatList>
+        </View>
+    );
+}
+
 const Cart_item = (props) => {
-    // useEffect(()=>{
-    //     setQty(item.item_qty)
-    // }, []);
+    const [items, setItems] = useState(null);
+    useEffect(() => {
+        setItems(props.items);
+    }, [props]);
     return (
         <View style={css.cart_item}>
             <FlatList
-                data={props.items}
+                data={items}
                 keyExtractor={(item, index) => { return String(index); }}
-                renderItem={({ item }) => {
+                renderItem={({ item, index }) => {
                     return (
-                        <Item_data {...item}></Item_data>
+                        <Item_data {...item} index={index} up_parent={setItems} items={items}></Item_data>
                     )
                 }}
             ></FlatList>
@@ -183,27 +212,35 @@ const Item_data = (props) => {
                             </View>
                         </View>
                     </View>
-                    <View style={{ marginTop: 4, flexDirection: "row", justifyContent: "flex-end" }}>
-                        <TouchableOpacity onPress={() => {
-                            console.log("delete item?");
-                        }}
-                        >
-                            <FontAwesome5Icon name="trash" color="tomato"
-                                size={21}
+                    <View>
+                        <Text>[item option html] {`->${props.id}`}</Text>
+                    </View>
+                    <View style={{ flex: 1, justifyContent: "flex-end" }}>
+                        <View style={{ marginTop: 4, flexDirection: "row", justifyContent: "flex-end" }}>
+                            <TouchableOpacity onPress={() => {
+                                console.log("delete item?");
+                                let _items = props.items;
+                                _items.splice(props.index, 1);
+                                props.up_parent([..._items]);
+                            }}
                             >
-                            </FontAwesome5Icon>
-                        </TouchableOpacity>
+                                <FontAwesome5Icon name="trash" color="tomato"
+                                    size={21}
+                                >
+                                </FontAwesome5Icon>
+                            </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => {
-                            console.log("delete item?");
-                        }}
-                            style={{ marginLeft: 12 }}
-                        >
-                            <FontAwesome5Icon name="pen" color="green"
-                                size={21}
+                            <TouchableOpacity onPress={() => {
+                                console.log("delete item?");
+                            }}
+                                style={{ marginLeft: 12 }}
                             >
-                            </FontAwesome5Icon>
-                        </TouchableOpacity>
+                                <FontAwesome5Icon name="pen" color="green"
+                                    size={21}
+                                >
+                                </FontAwesome5Icon>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </View>
