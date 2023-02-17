@@ -56,7 +56,8 @@ const Home = (props) => {
             </View>
             <View style={{ flex: 20 }}>
                 <TouchableOpacity style={{ width: "100%", height: "100%" }} onPress={() => {
-                    navigation.navigate("ListCategory", { category_id: 5 });
+                    // navigation.navigate("ListCategory", { category_id: 5 }); // Support
+                    navigation.navigate("Support");
                 }}>
                     <Image source={require("../../assets/Images/2-1657643508.jpg")} style={{ width: "100%", height: "100%", resizeMode: "cover" }}></Image>
                 </TouchableOpacity>

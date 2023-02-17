@@ -16,7 +16,7 @@ const cart_val = {
         "id": 76,
         "name": "Voyage Yoga Bag",
         "item_url": null,
-        "image_path": "http://192.168.1.214/magento1x/pub/media/catalog/product/cache/c1fac57fcb2166384afe7ea8fd4fec5e/w/b/wb01-black-0.jpg",
+        "image_path": "http://192.168.100.138/magento2git/pub/media/catalog/product/cache/8c8a3b908bea6959b515c9f05dc97a29/w/b/wb01-black-0.jpg",
         "quote_id": 30,
         "store_id": 1,
         "created_at": "2023-02-11 17:30:39",
@@ -82,7 +82,7 @@ const cart_val = {
         "id": 77,
         "name": "Fusion Backpack",
         "item_url": null,
-        "image_path": "http://192.168.1.214/magento1x/pub/media/catalog/product/cache/c1fac57fcb2166384afe7ea8fd4fec5e/m/b/mb02-gray-0.jpg",
+        "image_path": "http://192.168.100.138/magento2git/pub/media/catalog/product/cache/8c8a3b908bea6959b515c9f05dc97a29/m/b/mb02-gray-0.jpg",
         "quote_id": 30,
         "store_id": 1,
         "created_at": "2023-02-11 17:31:10",
@@ -145,19 +145,19 @@ const cart_val = {
         "type": "simple"
       },
       {
-        "id": 76,
-        "name": "Voyage Yoga Bag",
+        "id": 19,
+        "name": "Helena Hooded Fleece",
         "item_url": null,
-        "image_path": "http://192.168.1.214/magento1x/pub/media/catalog/product/cache/0db981dd34708b4aaed740ebec5d39f4/w/t/wt09-white_main_1.jpg",
-        "quote_id": 30,
+        "image_path": "http://192.168.100.138/magento2git/pub/media/catalog/product/cache/bdf0e4b480ef1cb186046aa31202e8e5//w/h/wh10-gray_main_1.jpg",
+        "quote_id": 7,
         "store_id": 1,
-        "created_at": "2023-02-11 17:30:39",
-        "updated_at": "2023-02-11 17:31:10",
+        "created_at": "2023-02-17 02:53:39",
+        "updated_at": "2023-02-17 02:53:39",
         "item_qty": 1,
         "prices": [
           {
             "key": "price",
-            "value": "32.0000",
+            "value": "55.0000",
             "type": ""
           },
           {
@@ -172,17 +172,17 @@ const cart_val = {
           },
           {
             "key": "price_incl_tax",
-            "value": "32.0000",
+            "value": "55.0000",
             "type": ""
           },
           {
             "key": "discount_amount",
-            "value": "0.0000",
+            "value": "13.7500",
             "type": ""
           },
           {
             "key": "discount_percent",
-            "value": "0.0000",
+            "value": "25.0000",
             "type": ""
           },
           {
@@ -192,29 +192,75 @@ const cart_val = {
           }
         ],
         "request_option": null,
-        "request_option_html": null,
-        "apply_rule_ids": "2",
+        "request_option_html": [
+          {
+            "id": 144,
+            "code": null,
+            "label": "XL",
+            "postion": null,
+            "key": null,
+            "value": "170",
+            "type": "Size"
+          },
+          {
+            "id": 93,
+            "code": null,
+            "label": "Yellow",
+            "postion": null,
+            "key": null,
+            "value": "60",
+            "type": "Color"
+          }
+        ],
+        "apply_rule_ids": "5",
         "item_options": [
           {
-            "id": 175,
+            "id": 27,
             "code": "info_buyRequest",
             "label": null,
             "postion": null,
             "key": null,
-            "value": "{\"product\":\"8\",\"qty\":\"1\",\"_tha_sid\":\"4vimo9g49opfq3km0c40nfcsb8\"}",
+            "value": "{\"_tha_sid\":\"ggo3ti3v1bh0njtibigjdhr2c2\",\"product\":\"1178\",\"super_attribute\":{\"144\":\"170\",\"93\":\"60\"},\"qty\":1}",
+            "type": null
+          },
+          {
+            "id": 28,
+            "code": "attributes",
+            "label": null,
+            "postion": null,
+            "key": null,
+            "value": "{\"144\":\"170\",\"93\":\"60\"}",
+            "type": null
+          },
+          {
+            "id": 29,
+            "code": "product_qty_1177",
+            "label": null,
+            "postion": null,
+            "key": null,
+            "value": "1",
+            "type": null
+          },
+          {
+            "id": 30,
+            "code": "simple_product",
+            "label": null,
+            "postion": null,
+            "key": null,
+            "value": "1177",
             "type": null
           }
         ],
         "label": null,
         "key": null,
         "value": null,
-        "type": "simple"
+        "type": "configurable"
       },
       {
         "id": 77,
         "name": "Fusion Backpack",
         "item_url": null,
-        "image_path": "http://192.168.1.214/magento1x/pub/media/catalog/product/cache/c1fac57fcb2166384afe7ea8fd4fec5e/w/b/wb04-blue-0.jpg",
+        "image_path": "http://192.168.100.138/magento2git/pub/media/catalog/product/cache/8c8a3b908bea6959b515c9f05dc97a29/w/b/wb04-blue-0.jpg",
         "quote_id": 30,
         "store_id": 1,
         "created_at": "2023-02-11 17:31:10",
@@ -280,7 +326,7 @@ const cart_val = {
         "id": 76,
         "name": "Voyage Yoga Bag",
         "item_url": null,
-        "image_path": "http://192.168.1.214/magento1x/pub/media/catalog/product/cache/c1fac57fcb2166384afe7ea8fd4fec5e/m/h/mh07-gray_main_2.jpg",
+        "image_path": "http://192.168.100.138/magento2git/pub/media/catalog/product/cache/8c8a3b908bea6959b515c9f05dc97a29/m/h/mh07-gray_main_2.jpg",
         "quote_id": 30,
         "store_id": 1,
         "created_at": "2023-02-11 17:30:39",
@@ -372,3 +418,7 @@ const cart_val = {
   };
 
   export default cart_val;
+
+// product: 120100
+// super_attribute[195]: 22
+// qty: 1

@@ -10,6 +10,7 @@ import Login from "../components/Classcom/Login";
 import UserDetail from "../components/Classcom/UserDetail";
 import DetailProduct from "../components/funCom/DetailProduct";
 import Cart from "./Cart";
+import Support from "../components/Classcom/Support/Support";
 
 import { connect } from "react-redux";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -26,7 +27,7 @@ const BottomTabNavigator = (props) => {
             })}
             // tabBarOptions={{ showLabel: false }} // ẩn bottom_tab title(tiêu đề của thanh dưới trang)
         >
-            <Tab.Screen name="Home" component={Home}
+            <Tab.Screen name="HomeScreen" component={HomeScreen}
                 options={{
                     tabBarLabel: 'Home',
                     tabBarShowLabel: false, // ẩn bottom_tab title(tiêu đề của thanh dưới trang)
@@ -39,7 +40,7 @@ const BottomTabNavigator = (props) => {
             <Tab.Screen name="ProductScreen" component={ProductScreen}
                 options={{
                     tabBarLabel: 'Products',
-                    tabBarIcon: ({ focused, color, size }) => <Ionicons name={focused ? 'ios-bug-outline' : 'ios-list-outline'} size={26} color={color} />
+                    tabBarIcon: ({ focused, color, size }) => <Ionicons name={focused ? 'bug' : 'list'} size={26} color={color} />
                 }}
             />
 
@@ -71,6 +72,15 @@ const ScrAll = () => { // dùng nhiều screen trong cùng 1 bottom_tab_screen
             }} />
         </Stack.Navigator>
     )
+};
+
+const HomeScreen = ()=>{
+    return(
+        <Stack.Navigator>
+            <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+            <Stack.Screen name="Support" component={Support} />
+        </Stack.Navigator>
+    );
 };
 
 const ProductScreen = () => { // dùng nhiều screen trong cùng 1 bottom_tab_screen

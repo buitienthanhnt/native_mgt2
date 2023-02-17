@@ -26,8 +26,8 @@ const Cart = (props) => {
                 <View style={{ flex: 70, marginBottom: 6 }}>
                     <Text style={css.cart_title}>Cart data</Text>
                     <ScrollView
-                    
-                        refreshControl={<RefreshControl refreshing={refres} onRefresh={()=>{
+
+                        refreshControl={<RefreshControl refreshing={refres} onRefresh={() => {
                             setCart([...cart_data.items]);
                         }} />}
                         showsVerticalScrollIndicator={false}
@@ -162,9 +162,11 @@ const Cart_item = (props) => {
 
 const Item_data = (props) => {
     const [qty, setQty] = useState(0);
+    const [data, setData] = useState(null);
     useEffect(() => {
         setQty(props.item_qty);
-    }, []);
+        setData(props);
+    }, [props]);
     return (
         <View>
             <View style={{ padding: 8, flexDirection: "row" }}>
@@ -193,7 +195,7 @@ const Item_data = (props) => {
                             value={String(qty)}
                             // defaultValue={String(item.item_qty)} // không chạy
                             onChangeText={(value) => { setQty(value) }}
-                            style={{ width: 30, height: 30, borderWidth: 1, borderRadius: 6, padding: 4, paddingLeft: 10 }}
+                            style={{ height: 30, width: 32, borderWidth: 1, borderRadius: 6, padding: 4, paddingLeft: 6 }}
                             keyboardType="numeric">
                         </TextInput>
                         <View style={{ textAlign: "center", justifyContent: "center" }}>
@@ -213,7 +215,19 @@ const Item_data = (props) => {
                         </View>
                     </View>
                     <View>
-                        <Text>[item option html] {`->${props.id}`}</Text>
+                        {(() => {
+                            if (data && data.request_option_html) {
+                                let _html = [];
+                                for (const element in data.request_option_html) {
+                                    if (data.request_option_html[element].type && data.request_option_html[element].label) {
+                                        // return (<Text>{`${element.type}: ${element.label}`}</Text>); // element: là index của obj
+                                        // return(<Text>{data.request_option_html[element].type}: {data.request_option_html[element].label}</Text>); // obj[index] là gọi phần tử thứ index của obj
+                                        _html = [..._html, <Text style={{color: "violet"}} key={data.request_option_html[element].id}>{data.request_option_html[element].type}: {data.request_option_html[element].label}</Text>];
+                                    }
+                                }
+                                return _html;
+                            }
+                        })()}
                     </View>
                     <View style={{ flex: 1, justifyContent: "flex-end" }}>
                         <View style={{ marginTop: 4, flexDirection: "row", justifyContent: "flex-end" }}>
