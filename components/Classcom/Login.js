@@ -3,8 +3,10 @@ import { View, Text, Image, StyleSheet, Dimensions, ImageBackground, TextInput, 
 // import Icon from 'react-native-vector-icons/FontAwesome'; // mặc định có sẵn trong thư viện.
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import axios from 'axios'; // npm install axios
+// import { WebView } from 'react-native-webview';
 import Config from "../../assets/Datasource/Config";
-import * as WebBrowser from 'expo-web-browser';  // npx expo install expo-web-browser  // https://docs.expo.dev/versions/v46.0.0/sdk/webbrowser/
+import * as WebBrowser from 'expo-web-browser';  // npx expo install expo-web-browser & npm i url & npm i punycode. (for mobile)// https://docs.expo.dev/versions/v46.0.0/sdk/webbrowser/
+// lưu ý dùng: WebBrowser của: expo-web-browser có thể lỗi trên web với thông báo: "can not resol module url thì chạy: npm i url & npm i punycode"
 import { connect } from "react-redux";
 // ============================================
 
@@ -25,7 +27,12 @@ class Login extends Component {
     }
 
     _handlePressButtonAsync = async () => {
-        let result = await WebBrowser.openBrowserAsync(Config.webview_url.new_acc);
+        if (Platform.OS == "web") {
+            window.open(Config.webview_url.new_acc); // use for web
+            // return <WebView source={{ uri: 'https://reactnative.dev/' }} />;
+        }else{
+            let result = await WebBrowser.openBrowserAsync(Config.webview_url.new_acc); // for mobile; có thể lỗi với bản web
+        }
     };
 
     UNSAFE_componentWillMount() {

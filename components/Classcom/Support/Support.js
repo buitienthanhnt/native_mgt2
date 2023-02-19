@@ -1,10 +1,17 @@
-import React, { Component } from "react";
-import { StyleSheet, View, Text, TextInput, Clipboard, TouchableOpacity, Button, ScrollView, ToastAndroid, Platform } from "react-native";
+import React, { Component, useState } from "react";
+import { StyleSheet, View, Text, TextInput, Clipboard, TouchableOpacity, Button, ScrollView, ToastAndroid, Platform, Dimensions, LogBox } from "react-native";
 import { Tooltip } from 'react-native-elements';
-// import { ColorPicker } from 'react-native-color-picker'; // khong chajy
+import { ColorPicker, TriangleColorPicker, toHsv } from 'react-native-color-picker'; //  npm install react-native-color-picker --save & npm install @react-native-community/slider --save
 import { SketchPicker, SwatchesPicker, PhotoshopPicker } from 'react-color'; // npm install react-color --save :: https://casesandberg.github.io/react-color/
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import { Ionicons } from '@expo/vector-icons'; // chạy được cả trên web và android. xem icon: https://icons.expo.fyi || install: npm i @expo/vector-icons
+import ColorPickerWheel from 'react-native-wheel-color-picker'; // npm install react-native-wheel-color-picker
+
+// Ignore log notification by message
+// LogBox.ignoreLogs(['Warning: ...']); // ẩn các lỗi có dạng:
+
+//Ignore all log notifications
+LogBox.ignoreAllLogs();  // ẩn thộng báo tất cả các lỗi cảnh báo màu vàng hiện trên màn hình.
 
 class Support extends Component {
     constructor(props) {
@@ -17,7 +24,13 @@ class Support extends Component {
             <View style={{ flex: 1 }}>
                 <FindIcon></FindIcon>
                 <View style={{ backgroundColor: "black", height: 1 }}></View>
-                <FindColor></FindColor>
+                {(() => {
+                    if (Platform.OS == 'web') {
+                        return <FindColor></FindColor>;
+                    } else {
+                        return <FindColorMobile />;
+                    }
+                })()}
             </View>
         );
     }
@@ -48,7 +61,7 @@ class FindIcon extends Component {
                 <View style={css.icon}>
                     <Text style={{ fontSize: 18 }}>icon name:</Text>
                     <TextInput
-                        value={this.state.icon_name}
+                        value={(this.state.icon_name)}
                         style={css.icon_input_name}
                         onChangeText={(text) => {
                             this.setState({ icon_name: text });
@@ -69,9 +82,9 @@ class FindIcon extends Component {
                     ></TextInput>
                 </View>
                 <View>
-                    <Button title="find icon" onPress={() => {
+                    {/* <Button title="find icon" onPress={() => {
                         this.setState({ find_icon: true });
-                    }}></Button>
+                    }}></Button> */}
                 </View>
 
                 <View>
@@ -131,14 +144,71 @@ class FindIcon extends Component {
     }
 }
 
+const FindColorMobile = () => {
+    const [colorselect, setColorselect] = useState(null);
+    const [colorwheel, setColorwheel] = useState("");
+    function onColorChange(color) {
+        setColorwheel(color);
+    }
+    return (
+        <ScrollView
+            showsVerticalScrollIndicator={false}  // ẩn thanh trượt
+            showsHorizontalScrollIndicator={false}>
+            <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <ColorPicker
+                    onColorSelected={(color) => {
+                        //    alert(`Color selected: ${color}`)
+                        setColorselect(color);
+                    }}
+                    style={{ width: "80%", height: Dimensions.get("window").width / 10 * 8 }}
+                />
+                <View style={{ flexDirection: "row" }}>
+                    <Text style={{ fontSize: 18 }}>Color selected: {colorselect} </Text>
+                    <TouchableOpacity onPress={() => {
+                        copyToClipboard(colorselect);  // #36ff00
+                        ToastAndroid.show(`coppied: ${colorselect}`, 2000);
+                    }}>
+                        <FontAwesome5Icon name='copy' size={28} color='tomato' />
+                    </TouchableOpacity>
+                </View>
+            </View>
+
+            <View style={{ backgroundColor: "black", height: 1, marginTop: 8, marginBottom: 8 }}></View>
+
+            <View style={{ alignItems: "center", paddingLeft: 10}}>
+                <ColorPickerWheel
+                    color={colorwheel}
+                    onColorChange={(color) => onColorChange(color)}
+                    // onColorChangeComplete={color => alert(`Color selected: ${color}`)}
+                    thumbSize={20}
+                    sliderSize={20}
+                    noSnap={true}
+                    row={false}
+                    style={{width: "80%"}}
+                />
+                <View style={{ flexDirection: "row", marginTop: 10 }}>
+                    <Text style={{ fontSize: 18 }}>Color selected: {colorwheel} </Text>
+                    <TouchableOpacity onPress={() => {
+                        copyToClipboard(colorwheel);  // #36ff00
+                        ToastAndroid.show(`coppied: ${colorwheel}`, 2000);
+                    }}>
+                        <FontAwesome5Icon name='copy' size={28} color='tomato' />
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <View style={{ backgroundColor: "black", height: 1, marginTop: 8, marginBottom: 8 }}></View>
+        </ScrollView >
+    );
+}
+
 class FindColor extends Component {
     constructor(props) {
         super(props);
-        this.state = { 
-            color: null, 
+        this.state = {
+            color: null,
             background: '#fff',
             swatch_color: null
-         };
+        };
     }
 
     render() {
@@ -162,7 +232,7 @@ class FindColor extends Component {
                         <FontAwesome5Icon style={{ marginLeft: 8 }} name='copy' size={24} color='tomato' onPress={() => {
                             copyToClipboard(this.state.background);
                             if (Platform.OS != "web") {
-                                ToastAndroid.show("coppied!");
+                                ToastAndroid.show("coppied!", 2000);
                             } else {
                                 alert("coppied!");
                             }
@@ -175,7 +245,7 @@ class FindColor extends Component {
                                 copyToClipboard(JSON.stringify(this.state.color.rgb));
                             }
                             if (Platform.OS != "web") {
-                                ToastAndroid.show("coppied!");
+                                ToastAndroid.show("coppied!", 2000);
                             } else {
                                 alert("coppied!");
                             }
@@ -185,7 +255,7 @@ class FindColor extends Component {
 
                 <View style={{ marginTop: 6, padding: 6 }}>
                     <SwatchesPicker width={"100%"} onChange={(color, event) => {
-                        this.setState({swatch_color: color});
+                        this.setState({ swatch_color: color });
                     }} />
 
                     <View style={{ flexDirection: "row", marginTop: 10 }}>
@@ -193,7 +263,7 @@ class FindColor extends Component {
                         <FontAwesome5Icon style={{ marginLeft: 8 }} name='copy' size={24} color='tomato' onPress={() => {
                             copyToClipboard(this.state.swatch_color.hex);
                             if (Platform.OS != "web") {
-                                ToastAndroid.show("coppied!");
+                                ToastAndroid.show("coppied!", 2000);
                             } else {
                                 alert("coppied!");
                             }
@@ -201,13 +271,13 @@ class FindColor extends Component {
                     </View>
 
                     <View style={{ flexDirection: "row", marginTop: 10 }}>
-                        <Text style={{ fontSize: 20 }}>rgb: {this.state.swatch_color ? JSON.stringify(this.swatch_color.rgb) : ""}</Text>
+                        <Text style={{ fontSize: 20 }}>rgb: {this.state.swatch_color ? JSON.stringify(this.state.swatch_color.rgb) : ""}</Text>
                         <FontAwesome5Icon style={{ marginLeft: 8 }} name='copy' size={24} color='tomato' onPress={() => {
                             if (this.state.swatch_color) {
                                 copyToClipboard(JSON.stringify(this.state.swatch_color.rgb));
                             }
                             if (Platform.OS != "web") {
-                                ToastAndroid.show("coppied!");
+                                ToastAndroid.show("coppied!", 2000);
                             } else {
                                 alert("coppied!");
                             }
