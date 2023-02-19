@@ -1,11 +1,11 @@
 const request_data = {
     http: "http://",
     https: "http://",
-    ip: "192.168.1.214/",                 //  mochi-5g: (192.168.1.214 :m6800)(192.168.1.153 :m4700)(ubuntu cmd: "ip a" to get ipaddress)
-    // ip: "192.168.99.100/",             // home ip
+    // ip: "192.168.1.214/",                 //  mochi-5g: (192.168.1.214 :m6800)(192.168.1.153 :m4700)(ubuntu cmd: "ip a" to get ipaddress)
+    ip: "192.168.99.104/",             // home ip
     // ip: "192.168.100.138/",            // ip jm360
-    uri_241: "magento1x/index.php/",   // win10 m6800
-    // uri_241: "magento243x/index.php/", // ubuntu m4700-2(new)
+    // uri_241: "magento1x/index.php/",   // win10 m6800
+    uri_241: "magento243x/index.php/", // ubuntu m4700-2(new)
     // uri_241: "magento242/pub/",        // ubuntu m4700-1
     // uri_241: "magento2git/index.php/", // desktop jm360
     rest: "rest/",
@@ -41,7 +41,6 @@ const request_data = {
         }
         return values.slice(0, values.lastIndexOf("&")); // loại bỏ dấu:: "&" ở vị trí cuối cùng.
     }
-
 };
 
 export default request_data;

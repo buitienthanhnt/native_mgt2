@@ -22,7 +22,7 @@ const add_to_cart = async (props, params)=>{
     // console.log(props);
     var request = Config.http+Config.ip+Config.uri_241+Config.rest+Config.v1+Config.api.add_cart+Config.use_params(params);
     let data = await axios.post(request);
-    // console.log(data);
+    // console.log(data.data);
     props.up_date_cart(data.data);
 }
 
@@ -154,7 +154,7 @@ const DetailProduct = (props) => {
                                             <Text style={{ fontSize: 22 }}>price: {data.detail_data != undefined && (data.detail_data.type == "simple" || data.detail_data.type == "configurable") ? data.detail_data.price * qty.sim : price}</Text>
                                         </View>
                                         {(() => {
-                                            if (data.detail_data != undefined && (data.detail_data.type == "simple" || data.detail_data.type == "configurable")) {
+                                            if (data.detail_data != undefined && (data.detail_data.type == "simple" || data.detail_data.type == "configurable") || data.detail_data.type == "bundle") {
                                                 return (
                                                     <View style={{ flexDirection: "row", width: "50%", justifyContent: "flex-end" }}>
                                                         <Text style={{ fontSize: 12, height: "auto", alignSelf: "flex-end" }}>(instock)</Text>
@@ -289,11 +289,45 @@ const DetailProduct = (props) => {
 
                                     <View style={{ marginBottom: 6 }}>
                                         <Button title="add to cart" onPress={() => {
-                                            var _params = {_tha_sid: props.g_data._tha_sid}
                                             if (data.detail_data.type == "simple") {
+                                                let _params = {_tha_sid: props.g_data._tha_sid};
                                                 _params = {..._params, qty: qty.sim, product: data.detail_data.eid};
+                                                add_to_cart(props, _params);
+                                            }else if(data.detail_data.type == "grouped"){
+                                                let group_param = {};
+                                                for (const key in select) {
+                                                    let k = "super_group[" + key + "]";
+                                                    group_param = {...group_param, [k]: select[key]};
+                                                }
+                                                let _params = {_tha_sid: props.g_data._tha_sid, product: data.detail_data.eid, ...group_param};
+                                                add_to_cart(props, _params);
+                                            }else if(data.detail_data.type == "configurable"){
+                                                let group_param = {};
+                                                for (const key in select) {
+                                                    let k = "super_attribute[" + key + "]";
+                                                    group_param = {...group_param, [k]: select[key]};
+                                                }
+                                                // console.log(group_param);
+                                                let _params = {_tha_sid: props.g_data._tha_sid, qty: qty, product: data.detail_data.eid, ...group_param};
+                                                add_to_cart(props, _params);
+                                            }else if(data.detail_data.type == "bundle"){
+                                                let cop_qty = qty;
+                                                let group_param = {}; let Bunder_qty = qty.sim;
+                                                for (const key in select) {
+                                                    let k = "bundle_option[" + key + "]";
+                                                    group_param = {...group_param, [k]: select[key]};
+                                                }
+                                                let bunder_request_qty = {};
+                                                for (const index in cop_qty) {
+                                                    if (index != "sim") {
+                                                        let ind = "bundle_option_qty[" + index + "]";
+                                                        bunder_request_qty = {...bunder_request_qty, [ind]: cop_qty[index]};
+                                                    }
+                                                }
+                                                let _params = {_tha_sid: props.g_data._tha_sid,qty: Bunder_qty, product: data.detail_data.eid, ...group_param, ...bunder_request_qty};
+                                                add_to_cart(props, _params);
                                             }
-                                            add_to_cart(props, _params);
+                                            // add_to_cart(props, _params);
                                             // console.log(select, qty);
                                         }}></Button>
                                     </View>
@@ -338,7 +372,6 @@ const Bunder_attr = (props) => {
                         <View>
                             <Text style={{ fontSize: 20, textDecorationLine: "underline", color: "green", fontWeight: "bold" }}>Bunder attrs</Text>
                             <FlatList
-
                                 data={bunder}
                                 keyExtractor={(item) => item.id}
                                 renderItem={({ item }) => {
@@ -454,11 +487,6 @@ const Bunder_select_item = (props) => {
             {/* <View style={{ flexDirection: "row", alignContent: "center", marginTop: "auto" }}> */}
             {(() => {
                 if (Platform.OS != "web") {
-                    // return(
-                    //     <View style={{ flexDirection: "row", alignContent: "center", margin: "auto", marginLeft: 'inherit' }}>
-                    //         <Text>ppppp</Text>
-                    //     </View>
-                    // )
                     return (
                         <View style={{ flexDirection: "row", alignContent: "center", margin: "auto", paddingTop: 6}}>
                             <View style={{ width: "70%" }}>

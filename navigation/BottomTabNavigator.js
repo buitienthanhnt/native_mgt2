@@ -52,7 +52,7 @@ const BottomTabNavigator = (props) => {
 
             <Tab.Screen name="ScrAll" component={ScrAll} tabBarOptions={{ showLabel: false, }}
                 options={{
-                    tabBarBadge: props.g_data.cart_data != null ? props.g_data.cart_data.item_qty : null,
+                    tabBarBadge: props.g_data.cart_data && props.g_data.cart_data.item_qty ? props.g_data.cart_data.item_qty : null,
                     tabBarLabel: 'Cart',
                     tabBarShowLabel: false,
                     tabBarIcon: ({ focused, color, size }) => <Ionicons name={"cart"} size={26} color={color} />

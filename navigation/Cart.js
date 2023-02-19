@@ -3,7 +3,9 @@ import { View, Text, Button, StatusBar, ScrollView, RefreshControl, StyleSheet, 
 import { Tooltip } from 'react-native-elements'; //npm install react-native-elements + npm i --save react-native-vector-icons + npm install react-native-safe-area-context
 // import { TextInput } from 'react-native-paper'; // npm install react-native-paper
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
-import Collapsible from 'react-native-collapsible';  // npm install --save react-native-collapsible
+import Collapsible from 'react-native-collapsible';  // npm install --save react-native-collapsibleon
+import Config from "../assets/Datasource/Config";
+import axios from 'axios'; // npm install axios
 
 import { connect } from "react-redux";
 import cart_val from "./cart_data";
@@ -14,12 +16,21 @@ const Cart = (props) => {
     const { navigation } = props;
     const [refres, setRefres] = useState(false);
     const [cart, setCart] = useState(null);
+
+    const empty_cart = async (props, params)=>{
+        var request = Config.http+Config.ip+Config.uri_241+Config.rest+Config.v1+Config.api.empty_cart+Config.use_params(params);
+        let data = await axios.delete(request);
+        props.up_date_cart(data.data);
+    }
+
     useEffect(() => {
-        setCart(cart_data.items);
+        // setCart(cart_data.items);
+        console.log(props.g_data.cart_data);
+        setCart(props.g_data.cart_data);
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"]); // VirtualizedLists should never be nested inside plain ScrollViews with the same
     }, [props]);
 
-    if (!props.g_data.cart_data) {
+    if (cart) {
         return (
             <View style={{ flex: 1 }}>
                 <StatusBar></StatusBar>
@@ -33,7 +44,7 @@ const Cart = (props) => {
                         showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
                     >
-                        <Cart_item items={cart} ></Cart_item>
+                        <Cart_item items={cart.items} ></Cart_item>
                     </ScrollView>
                 </View>
                 <DiscountElement></DiscountElement>
@@ -45,6 +56,10 @@ const Cart = (props) => {
 
                 <Button title="show cart_data" onPress={() => {
                     console.log(cart_data);
+                }}></Button>
+
+                <Button title="empty cart!!" onPress={() => {
+                    empty_cart(props, {_tha_sid: props.g_data._tha_sid});
                 }}></Button>
                 {/* skipAndroidStatusBar={true} để không bị lặp lại nội dung khi hiển thị. */}
                 {/* <Tooltip popover={<Text>tooooool</Text>} withOverlay={false} withPointer={true} skipAndroidStatusBar={true}>
@@ -222,7 +237,7 @@ const Item_data = (props) => {
                                     if (data.request_option_html[element].type && data.request_option_html[element].label) {
                                         // return (<Text>{`${element.type}: ${element.label}`}</Text>); // element: là index của obj
                                         // return(<Text>{data.request_option_html[element].type}: {data.request_option_html[element].label}</Text>); // obj[index] là gọi phần tử thứ index của obj
-                                        _html = [..._html, <Text style={{color: "violet"}} key={data.request_option_html[element].id}>{data.request_option_html[element].type}: {data.request_option_html[element].label}</Text>];
+                                        _html = [..._html, <Text style={{ color: "violet" }} key={data.request_option_html[element].id}>{data.request_option_html[element].type}: {data.request_option_html[element].label}</Text>];
                                     }
                                 }
                                 return _html;
@@ -311,5 +326,15 @@ export default connect(
         return {
             g_data: state.defRe
         }
+    },
+    (dispatch) => {
+        return {
+            up_date_cart: (cart_data)=>{
+                dispatch({
+                    type: "UPDATE_CART",
+                    cart_data: cart_data
+                })
+            }
+        };
     }
 )(Cart);

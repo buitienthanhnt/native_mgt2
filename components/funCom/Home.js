@@ -20,7 +20,7 @@ const Home = (props) => {
             try {
                 console.log("not has _tha_sid");
                 let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.new_sid;
-                // get_sid(path);
+                get_sid(path);
             } catch (error) {
                 console.log(error);
             }
