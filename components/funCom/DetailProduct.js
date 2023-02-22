@@ -18,12 +18,46 @@ import Reviews from "./Reviews";
 import axios from 'axios'; // npm install axios
 import { connect } from "react-redux";
 
-const add_to_cart = async (props, params)=>{
-    // console.log(props);
-    var request = Config.http+Config.ip+Config.uri_241+Config.rest+Config.v1+Config.api.add_cart+Config.use_params(params);
+const add_to_cart = async (_data, props, select, qty, setAddcart)=>{
+    setAddcart(true);
+    var _params = {};
+    if (_data.detail_data.type == "simple") {
+        _params = {...{_tha_sid: props.g_data._tha_sid}, qty: qty.sim, product: _data.detail_data.eid};
+    }else if(_data.detail_data.type == "grouped"){
+        let group_param = {};
+        for (const key in select) {
+            let k = "super_group[" + key + "]";
+            group_param = {...group_param, [k]: select[key]};
+        }
+        _params = {_tha_sid: props.g_data._tha_sid, product: _data.detail_data.eid, ...group_param};
+    }else if(_data.detail_data.type == "configurable"){
+        let group_param = {};
+        for (const key in select) {
+            let k = "super_attribute[" + key + "]";
+            group_param = {...group_param, [k]: select[key]};
+        }
+        _params = {_tha_sid: props.g_data._tha_sid, qty: qty, product: _data.detail_data.eid, ...group_param};
+    }else if(_data.detail_data.type == "bundle"){
+        let cop_qty = qty;
+        let group_param = {}; let Bunder_qty = qty.sim;
+        for (const key in select) {
+            let k = "bundle_option[" + key + "]";
+            group_param = {...group_param, [k]: select[key]};
+        }
+        let bunder_request_qty = {};
+        for (const index in cop_qty) {
+            if (index != "sim") {
+                let ind = "bundle_option_qty[" + index + "]";
+                bunder_request_qty = {...bunder_request_qty, [ind]: cop_qty[index]};
+            }
+        }
+        _params = {_tha_sid: props.g_data._tha_sid,qty: Bunder_qty, product: _data.detail_data.eid, ...group_param, ...bunder_request_qty};
+    }
+    var request = Config.http+Config.ip+Config.uri_241+Config.rest+Config.v1+Config.api.add_cart+Config.use_params(_params);
     let data = await axios.post(request);
     // console.log(data.data);
     props.up_date_cart(data.data);
+    setAddcart(false);
 }
 
 const DetailProduct = (props) => {
@@ -40,6 +74,7 @@ const DetailProduct = (props) => {
     const [wishlist, setWishlist] = useState(false);
     const [qty, setQty] = useState({ sim: 1 });
     const [price, setPrice] = useState("0");
+    const [addcart, setAddcart] = useState(false);
     const image_height = 280;
 
     const getDetail = (product_id = 0) => {
@@ -288,48 +323,24 @@ const DetailProduct = (props) => {
                                     ></Bunder_attr>
 
                                     <View style={{ marginBottom: 6 }}>
-                                        <Button title="add to cart" onPress={() => {
-                                            if (data.detail_data.type == "simple") {
-                                                let _params = {_tha_sid: props.g_data._tha_sid};
-                                                _params = {..._params, qty: qty.sim, product: data.detail_data.eid};
-                                                add_to_cart(props, _params);
-                                            }else if(data.detail_data.type == "grouped"){
-                                                let group_param = {};
-                                                for (const key in select) {
-                                                    let k = "super_group[" + key + "]";
-                                                    group_param = {...group_param, [k]: select[key]};
-                                                }
-                                                let _params = {_tha_sid: props.g_data._tha_sid, product: data.detail_data.eid, ...group_param};
-                                                add_to_cart(props, _params);
-                                            }else if(data.detail_data.type == "configurable"){
-                                                let group_param = {};
-                                                for (const key in select) {
-                                                    let k = "super_attribute[" + key + "]";
-                                                    group_param = {...group_param, [k]: select[key]};
-                                                }
-                                                // console.log(group_param);
-                                                let _params = {_tha_sid: props.g_data._tha_sid, qty: qty, product: data.detail_data.eid, ...group_param};
-                                                add_to_cart(props, _params);
-                                            }else if(data.detail_data.type == "bundle"){
-                                                let cop_qty = qty;
-                                                let group_param = {}; let Bunder_qty = qty.sim;
-                                                for (const key in select) {
-                                                    let k = "bundle_option[" + key + "]";
-                                                    group_param = {...group_param, [k]: select[key]};
-                                                }
-                                                let bunder_request_qty = {};
-                                                for (const index in cop_qty) {
-                                                    if (index != "sim") {
-                                                        let ind = "bundle_option_qty[" + index + "]";
-                                                        bunder_request_qty = {...bunder_request_qty, [ind]: cop_qty[index]};
-                                                    }
-                                                }
-                                                let _params = {_tha_sid: props.g_data._tha_sid,qty: Bunder_qty, product: data.detail_data.eid, ...group_param, ...bunder_request_qty};
-                                                add_to_cart(props, _params);
+                                        {(()=>{
+                                            if (addcart) {
+                                                return(
+                                                    <TouchableOpacity>
+                                                        <View style={{ backgroundColor: "#c1ff00", width: "100%", height: 36, borderRadius:6, alignItems: "center", justifyContent: "center"}}>
+                                                            <Image source={require("../../assets/Images/DualRing-1s-124px.gif")}
+                                                            style={{width:33, height: 33}}
+                                                            ></Image>
+                                                        </View>
+                                                    </TouchableOpacity>
+                                                );
+                                            }else{
+                                                return(<Button title="add to cart" onPress={() => {
+                                                    add_to_cart(data, props, select,qty, setAddcart);
+                                                    // console.log(select, qty);
+                                                }}></Button>);
                                             }
-                                            // add_to_cart(props, _params);
-                                            // console.log(select, qty);
-                                        }}></Button>
+                                        })()}
                                     </View>
 
                                     <Reviews reviews={data.detail_data != undefined ? data.detail_data.review_content : null}></Reviews>

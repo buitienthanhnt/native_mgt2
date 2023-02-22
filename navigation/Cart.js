@@ -9,23 +9,30 @@ import axios from 'axios'; // npm install axios
 
 import { connect } from "react-redux";
 import cart_val from "./cart_data";
-
 const cart_data = cart_val;
 
 const Cart = (props) => {
     const { navigation } = props;
     const [refres, setRefres] = useState(false);
     const [cart, setCart] = useState(null);
+    const [emtycart, setEmptycart] = useState(false);
 
-    const empty_cart = async (props, params)=>{
-        var request = Config.http+Config.ip+Config.uri_241+Config.rest+Config.v1+Config.api.empty_cart+Config.use_params(params);
-        let data = await axios.delete(request);
-        props.up_date_cart(data.data);
+    const empty_cart = async (props, params, setEmptycart) => {
+        setEmptycart(true);
+        try {
+            var request = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.empty_cart + Config.use_params(params);
+            let data = await axios.delete(request);
+            props.up_date_cart(data.data);
+            alert("empty cart success!");
+        } catch (error) {
+            console.log(error);
+        }
+        setEmptycart(false);
     }
 
     useEffect(() => {
         // setCart(cart_data.items);
-        console.log(props.g_data.cart_data);
+        // console.log(props.g_data.cart_data);
         setCart(props.g_data.cart_data);
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"]); // VirtualizedLists should never be nested inside plain ScrollViews with the same
     }, [props]);
@@ -44,23 +51,39 @@ const Cart = (props) => {
                         showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
                     >
-                        <Cart_item items={cart.items} ></Cart_item>
+                        <Cart_item items={cart.items} up_date_cart={props.up_date_cart} _tha_sid={props.g_data._tha_sid} ></Cart_item>
                     </ScrollView>
                 </View>
                 <DiscountElement></DiscountElement>
                 <View style={{ flex: 30 }}>
                     <View style={{ justifyContent: "flex-end", height: "100%" }}>
-                        <Cart_price prices={cart_data.prices}></Cart_price>
+                        <Cart_price prices={cart.prices}></Cart_price>
                     </View>
                 </View>
 
                 <Button title="show cart_data" onPress={() => {
-                    console.log(cart_data);
+                    console.log(cart);
                 }}></Button>
 
-                <Button title="empty cart!!" onPress={() => {
-                    empty_cart(props, {_tha_sid: props.g_data._tha_sid});
-                }}></Button>
+                {(() => {
+                    if (!emtycart) {
+                        return (
+                            <Button color={"red"} title="empty cart!!" onPress={() => {
+                                empty_cart(props, { _tha_sid: props.g_data._tha_sid }, setEmptycart);
+                            }}></Button>
+                        );
+                    } else {
+                        return (
+                            <TouchableOpacity>
+                                <View style={{ backgroundColor: "#c1ff00", width: "100%", height: 36, borderRadius: 6, alignItems: "center", justifyContent: "center" }}>
+                                    <Image source={require("../assets/Images/DualRing-1s-124px.gif")}
+                                        style={{ width: 33, height: 33 }}
+                                    ></Image>
+                                </View>
+                            </TouchableOpacity>
+                        );
+                    }
+                })()}
                 {/* skipAndroidStatusBar={true} để không bị lặp lại nội dung khi hiển thị. */}
                 {/* <Tooltip popover={<Text>tooooool</Text>} withOverlay={false} withPointer={true} skipAndroidStatusBar={true}>
                     <Text style={{ fontSize: 17, backgroundColor: "red", alignSelf: 'flex-start' }}>asdadsd</Text>
@@ -70,19 +93,11 @@ const Cart = (props) => {
     }
 
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             <StatusBar backgroundColor={"violet"}></StatusBar>
-            <Button title="Scr12" onPress={() => {
-                navigation.navigate("Scr12", { customer_id: 1 });
-            }}></Button><Text>{"\n"}</Text>
-
-            <Button title="Scr13" onPress={() => {
-                navigation.navigate("Scr13", { customer_id: 1 });
-            }}></Button><Text>{"\n"}</Text>
-
-            <Button title="props" onPress={() => {
-                console.log(props.g_data.cart_data);
-            }}></Button><Text>{"\n"}</Text>
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <Image source={require("../assets/Images/DoubleRing-1s-200px.gif")} style={{ width: 60, height: 60 }}></Image>
+            </View>
         </View>
     )
 };
@@ -167,7 +182,7 @@ const Cart_item = (props) => {
                 keyExtractor={(item, index) => { return String(index); }}
                 renderItem={({ item, index }) => {
                     return (
-                        <Item_data {...item} index={index} up_parent={setItems} items={items}></Item_data>
+                        <Item_data {...item} up_date_cart={props.up_date_cart} _tha_sid={props._tha_sid} index={index} up_parent={setItems} items={items}></Item_data>
                     )
                 }}
             ></FlatList>
@@ -176,8 +191,35 @@ const Cart_item = (props) => {
 };
 
 const Item_data = (props) => {
+    const update_qty = async (qty, setLoad) => {
+        setLoad(true);
+        try {
+            let _params = { _tha_sid: props._tha_sid, item_id: props.id, qty: qty };
+            let _request = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.update_qty + Config.use_params(_params);
+            let res_data = await axios.put(_request);
+            props.up_date_cart(res_data.data);
+        } catch (error) {
+            console.log(error);
+        }
+        setLoad(false);
+    }
+    const delete_item = async (setLoaddl) => {
+        setLoaddl(true);
+        try {
+            let _request = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.removeItem + "/" + props.id + Config.use_params({ _tha_sid: props._tha_sid });
+            let res_data = await axios.delete(_request);
+            props.up_date_cart(res_data.data);
+        } catch (error) {
+            console.log(error);
+        }
+        setLoaddl(false);
+    }
+
     const [qty, setQty] = useState(0);
     const [data, setData] = useState(null);
+    const [load, setLoad] = useState(false);
+    const [loaddl, setLoaddl] = useState(false);
+
     useEffect(() => {
         setQty(props.item_qty);
         setData(props);
@@ -196,15 +238,31 @@ const Item_data = (props) => {
                     <View style={{ flexDirection: "row" }}>
                         {/* <Text style={{ fontSize: 17, fontWeight: "bold" }}>qty: {item.item_qty}</Text> */}
                         <View style={{ textAlign: "center", justifyContent: "center" }}>
-                            <TouchableOpacity onPress={() => {
-                                console.log("sub qty");
-                                if (qty >= 1) {
-                                    let _qty = qty;
-                                    setQty(_qty -= 1)
+                            {(
+                                () => {
+                                    if (!load) {
+                                        return (
+                                            <TouchableOpacity onPress={() => {
+                                                console.log("sub qty");
+                                                if (qty >= 1) {
+                                                    let _qty = qty;
+                                                    update_qty(_qty -= 1, setLoad);
+                                                }
+                                            }}>
+                                                <Text style={{ fontSize: 20, fontWeight: "900", marginRight: 6 }}>-</Text>
+                                            </TouchableOpacity>
+                                        );
+                                    } else {
+                                        return (
+                                            <TouchableOpacity>
+                                                <Image source={require("../assets/Images/DualRing-1s-124px.gif")}
+                                                    style={{ width: 33, height: 33 }}
+                                                ></Image>
+                                            </TouchableOpacity>
+                                        );
+                                    }
                                 }
-                            }}>
-                                <Text style={{ fontSize: 20, fontWeight: "900", marginRight: 6 }}>-</Text>
-                            </TouchableOpacity>
+                            )()}
                         </View>
                         <TextInput
                             value={String(qty)}
@@ -214,13 +272,27 @@ const Item_data = (props) => {
                             keyboardType="numeric">
                         </TextInput>
                         <View style={{ textAlign: "center", justifyContent: "center" }}>
-                            <TouchableOpacity onPress={() => {
-                                console.log("add qty");
-                                let _qty = qty;
-                                setQty(_qty += 1);
-                            }}>
-                                <Text style={{ fontSize: 20, paddingLeft: 5, fontWeight: "600" }}>+</Text>
-                            </TouchableOpacity>
+                            {(() => {
+                                if (!load) {
+                                    return (
+                                        <TouchableOpacity onPress={() => {
+                                            console.log("add qty");
+                                            let _qty = qty;
+                                            update_qty(_qty += 1, setLoad);
+                                        }}>
+                                            <Text style={{ fontSize: 20, paddingLeft: 5, fontWeight: "600" }}>+</Text>
+                                        </TouchableOpacity>
+                                    );
+                                } else {
+                                    return (
+                                        <TouchableOpacity>
+                                            <Image source={require("../assets/Images/DualRing-1s-124px.gif")}
+                                                style={{ width: 33, height: 33 }}
+                                            ></Image>
+                                        </TouchableOpacity>
+                                    );
+                                }
+                            })()}
                         </View>
 
                         <View style={{ textAlign: "center", justifyContent: "center", width: Platform.OS == "web" ? "-webkit-fill-available" : "60%" }}>
@@ -246,21 +318,34 @@ const Item_data = (props) => {
                     </View>
                     <View style={{ flex: 1, justifyContent: "flex-end" }}>
                         <View style={{ marginTop: 4, flexDirection: "row", justifyContent: "flex-end" }}>
-                            <TouchableOpacity onPress={() => {
-                                console.log("delete item?");
-                                let _items = props.items;
-                                _items.splice(props.index, 1);
-                                props.up_parent([..._items]);
-                            }}
-                            >
-                                <FontAwesome5Icon name="trash" color="tomato"
-                                    size={21}
-                                >
-                                </FontAwesome5Icon>
-                            </TouchableOpacity>
+                            {(() => {
+                                if (!loaddl) {
+                                    return (
+                                        <TouchableOpacity onPress={() => {
+                                            // console.log("delete item?");
+                                            // let _items = props.items;
+                                            // _items.splice(props.index, 1);
+                                            // props.up_parent([..._items]);
+                                            delete_item(setLoaddl);
+                                        }}
+                                        >
+                                            <FontAwesome5Icon name="trash" color="tomato"
+                                                size={21}
+                                            >
+                                            </FontAwesome5Icon>
+                                        </TouchableOpacity>
+                                    );
+                                } else {
+                                    return (<TouchableOpacity>
+                                        <Image source={require("../assets/Images/DualRing-1s-124px.gif")}
+                                            style={{ width: 33, height: 33 }}
+                                        ></Image>
+                                    </TouchableOpacity>);
+                                }
+                            })()}
 
                             <TouchableOpacity onPress={() => {
-                                console.log("delete item?");
+                                delete_item(setLoaddl);
                             }}
                                 style={{ marginLeft: 12 }}
                             >
@@ -329,7 +414,7 @@ export default connect(
     },
     (dispatch) => {
         return {
-            up_date_cart: (cart_data)=>{
+            up_date_cart: (cart_data) => {
                 dispatch({
                     type: "UPDATE_CART",
                     cart_data: cart_data

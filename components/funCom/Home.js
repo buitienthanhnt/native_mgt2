@@ -12,7 +12,7 @@ const Home = (props) => {
         const response_data = await fetch(request_path);
         let data = await response_data.json();
         console.log(data);
-        props.update_sid(data.value)
+        props.update_sid(data.value);
     };
 
     useEffect(() => {
