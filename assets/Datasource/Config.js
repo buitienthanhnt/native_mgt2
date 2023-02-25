@@ -1,11 +1,12 @@
 const request_data = {
     http: "http://",
     https: "http://",
-    ip: "192.168.1.214/",                 //  mochi-5g: (192.168.1.214 :m6800)(192.168.1.153 :m4700)(ubuntu cmd: "ip a" to get ipaddress)
+    // ip: "192.168.1.214/",                 //  mochi-5g: (192.168.1.214 :m6800)(192.168.1.153 :m4700)(ubuntu cmd: "ip a" to get ipaddress)
+    ip: "192.168.1.153/",
     // ip: "192.168.99.100/",             // home ip
     // ip: "192.168.100.138/",            // ip jm360
-    uri_241: "magento1x/index.php/",   // win10 m6800
-    // uri_241: "magento243x/index.php/", // ubuntu m4700-2(new)
+    // uri_241: "magento1x/index.php/",   // win10 m6800
+    uri_241: "magento243x/index.php/", // ubuntu m4700-2(new)
     // uri_241: "magento242/pub/",        // ubuntu m4700-1
     // uri_241: "magento2git/index.php/", // desktop jm360
     rest: "rest/",
@@ -24,9 +25,9 @@ const request_data = {
         login_post:      "customer/login",
         new_sid:         "guest/newsid",
         get_cart:        "cart/data",       // GET   : {{url}}/{{res}}/V1/cart/data?_tha_sid={{_tha_sid}}
+        removeItem:      "cart/removeItem",      // DELETE: {{url}}/{{res}}/V1/cart/removeItem/[item_id]?_tha_sid={{_tha_sid}}
         add_cart:        "cart/addToCart",  // POST  : {{url}}/{{res}}/V1/cart/addToCart?_tha_sid={{_tha_sid}}
         update_qty:      "cart/updateQty",  // PUT   : {{url}}/{{res}}/V1/cart/updateQty?_tha_sid={{_tha_sid}}
-        removeItem:      "cart/removeItem", // DELETE: {{url}}/{{res}}/V1/cart/removeItem/[item_id]?_tha_sid={{_tha_sid}}
         empty_cart:      "cart/emptyCart",  // DELETE: {{url}}/{{res}}/V1/cart/emptyCart?_tha_sid={{_tha_sid}}
         get_currency:    "getCurrencyList", // GET   : {{url}}/{{res}}/V1/getCurrencyList?_tha_sid={{_tha_sid}}
         set_currency:    "updateCurrency",  // POST  : {{url}}/{{res}}/V1/updateCurrency?_tha_sid={{_tha_sid}}&currency=[]

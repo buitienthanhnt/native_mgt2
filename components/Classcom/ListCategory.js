@@ -47,7 +47,7 @@ class ListCategory extends Component {
         ).catch(
             (error) => {
                 console.log(error);
-                this.setState({refresh: false});
+                this.setState({ refresh: false });
             }
         );
     }
@@ -86,17 +86,22 @@ class ListCategory extends Component {
                                         <Text style={{ textAlign: "center", fontSize: 18, fontWeight: "bold" }}>{this.state.category_data ? this.state.category_data.name : ""} {"\n"}</Text>
                                         <View >
                                             <TouchableOpacity
-                                                style={{ 
-                                                    backgroundColor: "#2596be", 
+                                                style={{
+                                                    backgroundColor: "#2596be",
                                                     borderRadius: 4,
-                                                    justifyContent: "center", 
+                                                    justifyContent: "center",
                                                     flexDirection: "row",
                                                     width: "100%"
                                                 }}
                                                 onPress={() => {
-                                                    console.log("navigate to root");
+                                                    // console.log("navigate to root");
+                                                    this.getData().then(
+                                                        (data) => {
+                                                            this.setState({ category_data: data, refresh: false });
+                                                        }
+                                                    );
                                                 }}>
-                                                <Text style={{fontSize: 20, fontWeight: "bold"}}> root category</Text>
+                                                <Text style={{ fontSize: 20, fontWeight: "bold" }}> root category</Text>
                                             </TouchableOpacity>
                                         </View>
                                     </View>)
@@ -196,14 +201,28 @@ class CategoryTop extends Component {
                         ></FlatList>
                     </View>
 
-                    <View style={{ justifyContent: "center", alignItems: "center", width: "40%" }}>
-                        <Image source={require("../../assets/Images/uav-2760-1657582452.jpg")} style={
-                            {
-                                width: '100%',
-                                height: "100%",
-                                resizeMode: "contain"
-                            }
-                        }></Image>
+                    <View style={{ justifyContent: "center", alignItems: "center", width: "40%", backgroundColor: "#bfff00" }}>
+                        <TouchableOpacity style={{width: '100%', height: '100%'}} onPress={()=>{
+                            // alert(1321321);
+                            this.props.parent.getData().then(
+                                (data) => {
+                                    this.props.parent.setState({ category_data: data, refresh: false });
+                                    return data;
+                                }
+                            ).then(
+                                (data) => {
+                                    this.props.parent.setState({ category_data: data, refresh: false });
+                                }
+                            );
+                        }}>
+                            <Image source={require("../../assets/Images/uav-2760-1657582452.jpg")} style={
+                                {
+                                    width: '100%',
+                                    height: "100%",
+                                    resizeMode: "contain"
+                                }
+                            }></Image>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>

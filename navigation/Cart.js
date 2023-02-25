@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Button, StatusBar, ScrollView, RefreshControl, StyleSheet, Image, Dimensions, LogBox, TextInput, TouchableOpacity, Platform, FlatList } from "react-native";
 import { Tooltip } from 'react-native-elements'; //npm install react-native-elements + npm i --save react-native-vector-icons + npm install react-native-safe-area-context
+import RenderHtml from 'react-native-render-html'; // npm install --save-prod react-native-render-html
 // import { TextInput } from 'react-native-paper'; // npm install react-native-paper
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Collapsible from 'react-native-collapsible';  // npm install --save react-native-collapsibleon
@@ -16,6 +17,7 @@ const Cart = (props) => {
     const [refres, setRefres] = useState(false);
     const [cart, setCart] = useState(null);
     const [emtycart, setEmptycart] = useState(false);
+    const [afload, setAfload] = useState(false);
 
     const empty_cart = async (props, params, setEmptycart) => {
         setEmptycart(true);
@@ -34,10 +36,12 @@ const Cart = (props) => {
         // setCart(cart_data.items);
         // console.log(props.g_data.cart_data);
         setCart(props.g_data.cart_data);
+        if (!afload) { setAfload(true); }
+        // console.log("effect cart");
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"]); // VirtualizedLists should never be nested inside plain ScrollViews with the same
     }, [props]);
 
-    if (cart) {
+    if (cart && cart.items && cart.items.length) {
         return (
             <View style={{ flex: 1 }}>
                 <StatusBar></StatusBar>
@@ -90,6 +94,12 @@ const Cart = (props) => {
                 </Tooltip> */}
             </View>
         )
+    }
+
+    if (afload) {
+        return (<View style={{ flex: 1, padding: 6 }}>
+            <Text style={{ textAlign: "center", fontSize: 18 }}>Not has cart data1!!</Text>
+        </View>);
     }
 
     return (
@@ -207,6 +217,7 @@ const Item_data = (props) => {
         setLoaddl(true);
         try {
             let _request = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.removeItem + "/" + props.id + Config.use_params({ _tha_sid: props._tha_sid });
+            console.log(_request);
             let res_data = await axios.delete(_request);
             props.up_date_cart(res_data.data);
         } catch (error) {
@@ -309,7 +320,14 @@ const Item_data = (props) => {
                                     if (data.request_option_html[element].type && data.request_option_html[element].label) {
                                         // return (<Text>{`${element.type}: ${element.label}`}</Text>); // element: là index của obj
                                         // return(<Text>{data.request_option_html[element].type}: {data.request_option_html[element].label}</Text>); // obj[index] là gọi phần tử thứ index của obj
-                                        _html = [..._html, <Text style={{ color: "violet" }} key={data.request_option_html[element].id}>{data.request_option_html[element].type}: {data.request_option_html[element].label}</Text>];
+                                        // _html = [..._html, <Text style={{ color: "violet" }} key={data.request_option_html[element].id}>{data.request_option_html[element].type}: {data.request_option_html[element].label}</Text>];
+                                        _html = [..._html, <Text style={{ color: "violet" }} key={data.request_option_html[element].id}>
+                                            <RenderHtml
+                                                contentWidth={Dimensions.get("window").width}
+                                                enableExperimentalMarginCollapsing={true}
+                                                source={{ html: `${data.request_option_html[element].type}: ${data.request_option_html[element].label}` }}
+                                            ></RenderHtml>
+                                        </Text>];
                                     }
                                 }
                                 return _html;
