@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4c58edee-3fe4-4bdc-ac5d-e0c1e6c95b7b" name="Default Changelist" comment="hotfix/Tha: Up code support." />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="hotfix/support" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2KAZiFLYmeGCjsMm4CZkljpqSNP" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="D:/xampp/htdocs/magento2git" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4c58edee-3fe4-4bdc-ac5d-e0c1e6c95b7b" name="Default Changelist" comment="" />
+      <created>1673419472662</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1673419472662</updated>
+      <workItem from="1673419473882" duration="2704000" />
+      <workItem from="1673422246185" duration="5039000" />
+      <workItem from="1673578095835" duration="206000" />
+      <workItem from="1673579113557" duration="36000" />
+      <workItem from="1673600811086" duration="272000" />
+      <workItem from="1673601525397" duration="22000" />
+      <workItem from="1673835155403" duration="1367000" />
+      <workItem from="1673853841806" duration="224000" />
+      <workItem from="1673855193389" duration="2699000" />
+      <workItem from="1675044583057" duration="90000" />
+      <workItem from="1675054054768" duration="374000" />
+      <workItem from="1675304290750" duration="263000" />
+      <workItem from="1675307060534" duration="252000" />
+      <workItem from="1675328500331" duration="674000" />
+      <workItem from="1675650153026" duration="163000" />
+      <workItem from="1676283215409" duration="108000" />
+      <workItem from="1676285682840" duration="157000" />
+      <workItem from="1676341640642" duration="338000" />
+      <workItem from="1676600020639" duration="860000" />
+      <workItem from="1676631519522" duration="159000" />
+      <workItem from="1677463670549" duration="780000" />
+    </task>
+    <task id="LOCAL-00001" summary="hotfix/Tha: from destop.">
+      <created>1673420651282</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1673420651282</updated>
+    </task>
+    <task id="LOCAL-00002" summary="hotfix/Tha: commit for other files.">
+      <created>1673422117652</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1673422117652</updated>
+    </task>
+    <task id="LOCAL-00003" summary="hotfix/Tha: update after run npm install và xóa node_module và package-lock.json.">
+      <created>1673424230223</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1673424230223</updated>
+    </task>
+    <task id="LOCAL-00004" summary="hotfix/Tha: Up code for change config.">
+      <created>1673578224083</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1673578224083</updated>
+    </task>
+    <task id="LOCAL-00005" summary="hotfix/Tha: Up code L-5 for customer detail screen.">
+      <created>1673600926636</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1673600926636</updated>
+    </task>
+    <task id="LOCAL-00006" summary="hotfix/Tha: Update code L6.">
+      <created>1673601015589</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1673601015589</updated>
+    </task>
+    <task id="LOCAL-00007" summary="hotfix/Tha: Update code for demo redux 2.">
+      <created>1673853926334</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1673853926334</updated>
+    </task>
+    <task id="LOCAL-00008" summary="hotfix/Tha: Up code new doc.">
+      <created>1673855301742</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1673855301742</updated>
+    </task>
+    <task id="LOCAL-00009" summary="hotfix/Tha: Up code L-11 for use bottom_tab and drawer_tab.">
+      <created>1675054252181</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1675054252181</updated>
+    </task>
+    <task id="LOCAL-00010" summary="hotfix/Tha: Update code L-11.">
+      <created>1675054388864</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1675054388864</updated>
+    </task>
+    <task id="LOCAL-00011" summary="hotfix/Tha: Update code from jm destop.">
+      <created>1675307303929</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1675307303929</updated>
+    </task>
+    <task id="LOCAL-00012" summary="hotfix/Tha: Update code L-12.">
+      <created>1676285819150</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1676285819150</updated>
+    </task>
+    <task id="LOCAL-00013" summary="hotfix/Tha: Up code support.">
+      <created>1676631646392</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1676631646392</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="hotfix/Tha: from destop." />
+    <MESSAGE value="hotfix/Tha: commit for other files." />
+    <MESSAGE value="hotfix/Tha: update after run npm install và xóa node_module và package-lock.json." />
+    <MESSAGE value="hotfix/Tha: Up code for change config." />
+    <MESSAGE value="hotfix/Tha: Up code L-5 for customer detail screen." />
+    <MESSAGE value="hotfix/Tha: Update code L6." />
+    <MESSAGE value="hotfix/Tha: Update code for demo redux 2." />
+    <MESSAGE value="hotfix/Tha: Up code new doc." />
+    <MESSAGE value="hotfix/Tha: Up code L-11 for use bottom_tab and drawer_tab." />
+    <MESSAGE value="hotfix/Tha: Update code L-11." />
+    <MESSAGE value="hotfix/Tha: Update code from jm destop." />
+    <MESSAGE value="hotfix/Tha: Update code L-12." />
+    <MESSAGE value="hotfix/Tha: Up code support." />
+    <option name="LAST_COMMIT_MESSAGE" value="hotfix/Tha: Up code support." />
+  </component>
+</project>
