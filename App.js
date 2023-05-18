@@ -30,6 +30,11 @@ import BottomTabNavigator from './navigation/BottomTabNavigator';
 
 import { Provider } from 'react-redux'; // npm install react-redux --save :tạo cầu nối giữa redux vào react 
 import AppStore from './redux/AppStore';
+import Reactotron from 'reactotron-react-native'
+
+if(__DEV__) {
+    import('./ReactotronConfig').then(() => console.log('Reactotron Configured'))
+  }
 
 const Stack = createNativeStackNavigator();
 export default class App extends Component {
@@ -39,6 +44,7 @@ export default class App extends Component {
     }
 
     render() {
+        Reactotron.log('hello rendering world');
         let view = 1;
         if (view) {
             return (

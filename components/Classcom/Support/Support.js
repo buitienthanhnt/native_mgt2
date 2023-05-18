@@ -201,7 +201,7 @@ const FindColorMobile = () => {
     );
 }
 
-class FindColor extends Component {
+class FindColor extends Component { 
     constructor(props) {
         super(props);
         this.state = {

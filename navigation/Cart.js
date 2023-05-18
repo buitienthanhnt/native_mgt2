@@ -23,7 +23,16 @@ const Cart = (props) => {
         setEmptycart(true);
         try {
             var request = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.empty_cart + Config.use_params(params);
-            let data = await axios.delete(request);
+            let config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': "DELETE, POST, GET, OPTIONS",
+                    'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With'
+                }
+            };
+
+            let data = await axios.delete(request, {}, config);
             props.up_date_cart(data.data);
             alert("empty cart success!");
         } catch (error) {
