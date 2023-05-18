@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/nativeMgt2.iml" filepath="$PROJECT_DIR$/.idea/nativeMgt2.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/mgt2pro.iml" filepath="$PROJECT_DIR$/.idea/mgt2pro.iml" />
+>>>>>>> origin/main
     </modules>
   </component>
 </project>
