@@ -34,7 +34,7 @@ const request_data = {
     },
     // base_request : this.http+this.ip+this.uri_241+this.rest+this.v1, // not run
     webview_url: {
-        new_acc: "https://magento24.jmango.vn/index.php/default/customer/account/create/"
+        new_acc: "http://192.168.100.210/magento1/customer/account/create/"
     },
     use_params: function (params) {
         var values = "?";
