@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Image, TouchableOpacity, BackHandler } from 'react-native';
 import Config from "../../assets/Datasource/Config";
 import { connect } from 'react-redux';
+import { AsyncStorage } from 'react-native';
 
 const Home = (props) => {
 
@@ -13,20 +14,75 @@ const Home = (props) => {
         let data = await response_data.json();
         console.log(data);
         props.update_sid(data.value);
+        set_tha_sid(data.value);
+    };
+
+    const set_tha_sid = async (sid) => {
+        try {
+            await AsyncStorage.setItem(
+                '_tha_sid',
+                sid,
+            );
+            console.log("save _tha_sid:", sid);
+        } catch (error) {
+            // Error saving data
+        }
+        // return false;
+    };
+
+    const get_tha_sid = async (props) => {
+        try {
+            const value = await AsyncStorage.getItem('_tha_sid');
+            if (value !== null) {
+                // We have data!!
+                console.log("We have data", value);
+                props.update_sid(value);
+                return value
+            }
+        } catch (error) {
+            // Error retrieving data
+        }
+        return null;
     };
 
     useEffect(() => {
-        if (!props.g_data._tha_sid) {
-            try {
-                console.log("not has _tha_sid");
-                let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.new_sid;
-                get_sid(path);
-            } catch (error) {
-                console.log(error);
+        const _tha_sid = get_tha_sid(props);
+        _tha_sid.then((response)=>{
+            if (response) {
+                console.log("_tha_sid laf: ", response);
+            }else{
+                if (!props.g_data._tha_sid) {
+                    try {
+                        console.log("not has _tha_sid");
+                        let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.new_sid;
+                        get_sid(path);
+                    } catch (error) {
+                        console.log(error);
+                    }
+                } else {
+                    console.log("_tha_sid realy exists");
+                }
             }
-        } else {
-            console.log("_tha_sid realy exists");
-        }
+        }).catch(function(e){
+            console.log(e);
+        });
+
+        // if (_tha_sid) {
+        //     props.update_sid(_tha_sid);
+        // } else {
+        //     if (!props.g_data._tha_sid) {
+        //         try {
+        //             console.log("not has _tha_sid");
+        //             let path = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.new_sid;
+        //             get_sid(path);
+        //         } catch (error) {
+        //             console.log(error);
+        //         }
+        //     } else {
+        //         console.log("_tha_sid realy exists");
+        //     }
+        // }
+
     }, []);
 
     return (

@@ -8,7 +8,7 @@ import Config from "../../assets/Datasource/Config";
 import * as WebBrowser from 'expo-web-browser';  // npx expo install expo-web-browser & npm i url & npm i punycode. (for mobile)// https://docs.expo.dev/versions/v46.0.0/sdk/webbrowser/
 // lưu ý dùng: WebBrowser của: expo-web-browser có thể lỗi trên web với thông báo: "can not resol module url thì chạy: npm i url & npm i punycode"
 import { connect } from "react-redux";
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from 'react-native';
 // ============================================
 class Login extends Component {
     constructor(props) {
@@ -28,32 +28,32 @@ class Login extends Component {
 
     _storeData = async () => {
         try {
-          await AsyncStorage.setItem(
-            'TASKS',
-            'I like to save it.',
-          );
+            await AsyncStorage.setItem(
+                'TASKS',
+                'I like to save it.',
+            );
         } catch (error) {
-          // Error saving data
+            // Error saving data
         }
-      };
+    };
 
     _retrieveData = async () => {
-    try {
-        const value = await AsyncStorage.getItem('TASKS');
-        if (value !== null) {
-        // We have data!!
-        console.log(value);
+        try {
+            const value = await AsyncStorage.getItem('TASKS');
+            if (value !== null) {
+                // We have data!!
+                console.log(value);
+            }
+        } catch (error) {
+            // Error retrieving data
         }
-    } catch (error) {
-        // Error retrieving data
-    }
     };
 
     _handlePressButtonAsync = async () => {
         if (Platform.OS == "web") {
             window.open(Config.webview_url.new_acc); // use for web
             // return <WebView source={{ uri: 'https://reactnative.dev/' }} />;
-        }else{
+        } else {
             let result = await WebBrowser.openBrowserAsync(Config.webview_url.new_acc); // for mobile; có thể lỗi với bản web
         }
     };
