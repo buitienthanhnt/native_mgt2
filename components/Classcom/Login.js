@@ -8,8 +8,8 @@ import Config from "../../assets/Datasource/Config";
 import * as WebBrowser from 'expo-web-browser';  // npx expo install expo-web-browser & npm i url & npm i punycode. (for mobile)// https://docs.expo.dev/versions/v46.0.0/sdk/webbrowser/
 // lưu ý dùng: WebBrowser của: expo-web-browser có thể lỗi trên web với thông báo: "can not resol module url thì chạy: npm i url & npm i punycode"
 import { connect } from "react-redux";
+import {AsyncStorage} from 'react-native';
 // ============================================
-
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -25,6 +25,29 @@ class Login extends Component {
             load_login: false
         }
     }
+
+    _storeData = async () => {
+        try {
+          await AsyncStorage.setItem(
+            'TASKS',
+            'I like to save it.',
+          );
+        } catch (error) {
+          // Error saving data
+        }
+      };
+
+    _retrieveData = async () => {
+    try {
+        const value = await AsyncStorage.getItem('TASKS');
+        if (value !== null) {
+        // We have data!!
+        console.log(value);
+        }
+    } catch (error) {
+        // Error retrieving data
+    }
+    };
 
     _handlePressButtonAsync = async () => {
         if (Platform.OS == "web") {
@@ -238,6 +261,14 @@ class Login extends Component {
                                                 <Button title="call for support" onPress={() => {
                                                     Linking.openURL('tel:0702032201'); // mở qua ứng dụng di động để gọi. doc: https://reactnative.dev/docs/linking
                                                 }}></Button>
+                                                <Text>{"\n"}</Text>
+                                                {/* <Button title="save data"onPress={
+                                                    ()=>{
+                                                        this._storeData();
+                                                        this._retrieveData();
+                                                    }
+                                                }>
+                                                </Button> */}
 
                                             </View>
                                         </View>

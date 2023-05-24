@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4c58edee-3fe4-4bdc-ac5d-e0c1e6c95b7b" name="Default Changelist" comment="hotfix/Tha: Up code support." />
+    <list default="true" id="4c58edee-3fe4-4bdc-ac5d-e0c1e6c95b7b" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,7 +28,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="D:/xampp/htdocs/magento2git" />
+    <property name="last_opened_file_path" value="D:/xampp/htdocs/laravel1" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -61,6 +61,7 @@
       <workItem from="1676600020639" duration="860000" />
       <workItem from="1676631519522" duration="159000" />
       <workItem from="1677463670549" duration="780000" />
+      <workItem from="1684406378438" duration="266000" />
     </task>
     <task id="LOCAL-00001" summary="hotfix/Tha: from destop.">
       <created>1673420651282</created>
@@ -153,7 +154,21 @@
       <option name="project" value="LOCAL" />
       <updated>1676631646392</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="hotfix/Tha: Update code support.">
+      <created>1684406462994</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1684406462994</updated>
+    </task>
+    <task id="LOCAL-00015" summary="hotfix/Tha: Update code support.">
+      <created>1684406485827</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1684406485827</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -185,6 +200,7 @@
     <MESSAGE value="hotfix/Tha: Update code from jm destop." />
     <MESSAGE value="hotfix/Tha: Update code L-12." />
     <MESSAGE value="hotfix/Tha: Up code support." />
-    <option name="LAST_COMMIT_MESSAGE" value="hotfix/Tha: Up code support." />
+    <MESSAGE value="hotfix/Tha: Update code support." />
+    <option name="LAST_COMMIT_MESSAGE" value="hotfix/Tha: Update code support." />
   </component>
 </project>
