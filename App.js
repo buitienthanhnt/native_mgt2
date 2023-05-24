@@ -30,11 +30,13 @@ import BottomTabNavigator from './navigation/BottomTabNavigator';
 
 import { Provider } from 'react-redux'; // npm install react-redux --save :tạo cầu nối giữa redux vào react 
 import AppStore from './redux/AppStore';
-import Reactotron from 'reactotron-react-native'
+import Reactotron from 'reactotron-react-native' // adb reverse tcp:9090 tcp:9090 (chạy lênh này nếu dùng qua android hay máy ảo android để kíck hoạt reactotron)
 
+// reactotron
 if(__DEV__) {
     import('./ReactotronConfig').then(() => console.log('Reactotron Configured'))
   }
+// reactotron
 
 const Stack = createNativeStackNavigator();
 export default class App extends Component {
