@@ -4,6 +4,15 @@ import Config from "../../assets/Datasource/Config";
 import { connect } from 'react-redux';
 import { AsyncStorage } from 'react-native';
 
+const get_cart = async (propsp, _tha_sid = null)=>{
+    const get_cart_url = Config.http+Config.ip+Config.uri_241 + Config.rest + Config.v1 + Config.api.get_cart+Config.use_params({_tha_sid: _tha_sid ? _tha_sid : propsp.g_data._tha_sid});
+    console.log(get_cart_url);
+    const cart_data = await fetch(get_cart_url);
+    const value = await cart_data.json();
+    console.log(value);
+    propsp.up_date_cart(value);
+}
+
 const Home = (props) => {
 
     const { navigation, route, g_data } = props;
@@ -14,7 +23,7 @@ const Home = (props) => {
         let data = await response_data.json();
         console.log(data);
         props.update_sid(data.value);
-        set_tha_sid(data.value);
+        await set_tha_sid(data.value);
     };
 
     const set_tha_sid = async (sid) => {
@@ -36,7 +45,8 @@ const Home = (props) => {
             if (value !== null) {
                 // We have data!!
                 console.log("We have data", value);
-                props.update_sid(value);
+                await props.update_sid(value);
+                get_cart(props, value);
                 return value
             }
         } catch (error) {
@@ -131,6 +141,7 @@ export default connect(
     (state) => { return { g_data: state.defRe }; },
     (dispatch) => {
         return {
+            up_date_cart: (cart_data) => {dispatch({type: "UPDATE_CART", cart_data: cart_data})},
             update_sid: (_sid) => { dispatch({ type: "UPDATE_SID", sid: _sid }); },
             onFinishedItem: (index) => dispatch(finishTask(index)), // khai báo action qua props(nó sẽ gọi dispatch luôn)
             onDeleteItem: (index) => dispatch(deleteTask(index))  // khai báo action qua props

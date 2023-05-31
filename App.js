@@ -33,7 +33,7 @@ import AppStore from './redux/AppStore';
 import Reactotron from 'reactotron-react-native' // adb reverse tcp:9090 tcp:9090 (chạy lênh này nếu dùng qua android hay máy ảo android để kíck hoạt reactotron)
 
 // reactotron
-if(__DEV__) {
+if(__DEV__) { // adb reverse tcp:9090 tcp:9090
     import('./ReactotronConfig').then(() => console.log('Reactotron Configured'))
   }
 // reactotron
