@@ -1,11 +1,16 @@
 import React, { Component, useState } from "react";
-import { StyleSheet, View, Text, TextInput, Clipboard, TouchableOpacity, Button, ScrollView, ToastAndroid, Platform, Dimensions, LogBox } from "react-native";
+import {
+    StyleSheet, View, Text, TextInput, Clipboard, TouchableOpacity, Button,
+    ScrollView, ToastAndroid, Platform, Dimensions, LogBox, PermissionsAndroid, Image
+} from "react-native";
 import { Tooltip } from 'react-native-elements';
 import { ColorPicker, TriangleColorPicker, toHsv } from 'react-native-color-picker'; //  npm install react-native-color-picker --save & npm install @react-native-community/slider --save
 import { SketchPicker, SwatchesPicker, PhotoshopPicker } from 'react-color'; // npm install react-color --save :: https://casesandberg.github.io/react-color/
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import { Ionicons } from '@expo/vector-icons'; // chạy được cả trên web và android. xem icon: https://icons.expo.fyi || install: npm i @expo/vector-icons
 import ColorPickerWheel from 'react-native-wheel-color-picker'; // npm install react-native-wheel-color-picker
+
+import * as ImagePicker from 'expo-image-picker'; // npx expo install expo-image-picker
 
 // Ignore log notification by message
 // LogBox.ignoreLogs(['Warning: ...']); // ẩn các lỗi có dạng:
@@ -31,6 +36,7 @@ class Support extends Component {
                         return <FindColorMobile />;
                     }
                 })()}
+                <More></More>
             </View>
         );
     }
@@ -175,7 +181,7 @@ const FindColorMobile = () => {
 
             <View style={{ backgroundColor: "black", height: 1, marginTop: 8, marginBottom: 8 }}></View>
 
-            <View style={{ alignItems: "center", paddingLeft: 10}}>
+            <View style={{ alignItems: "center", paddingLeft: 10 }}>
                 <ColorPickerWheel
                     color={colorwheel}
                     onColorChange={(color) => onColorChange(color)}
@@ -184,7 +190,7 @@ const FindColorMobile = () => {
                     sliderSize={20}
                     noSnap={true}
                     row={false}
-                    style={{width: "80%"}}
+                    style={{ width: "80%" }}
                 />
                 <View style={{ flexDirection: "row", marginTop: 10 }}>
                     <Text style={{ fontSize: 18 }}>Color selected: {colorwheel} </Text>
@@ -201,7 +207,7 @@ const FindColorMobile = () => {
     );
 }
 
-class FindColor extends Component { 
+class FindColor extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -301,6 +307,36 @@ class FindColor extends Component {
 const copyToClipboard = (text) => {
     Clipboard.setString(text);
 };
+
+const More = () => {
+    const [image, setImage] = useState(null);
+    const [path, setPath] = useState(null);
+
+    const pickImage = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        console.log(result);
+        if (!result.canceled) {
+            setImage(result.uri);
+            setPath(result.uri);
+        }
+    };
+
+    return (
+        <View>
+            <Text>{ path }</Text>
+            <Button title="Pick an image from camera roll" onPress={pickImage} />
+            {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+            <View style={{ backgroundColor: "black", height: 1 }}></View>
+        </View>
+    )
+}
 
 const css = StyleSheet.create({
     title: {

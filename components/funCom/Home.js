@@ -9,7 +9,7 @@ const get_cart = async (propsp, _tha_sid = null)=>{
     console.log(get_cart_url);
     const cart_data = await fetch(get_cart_url);
     const value = await cart_data.json();
-    console.log(value);
+    // console.log(value);
     propsp.up_date_cart(value);
 }
 
