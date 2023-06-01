@@ -362,7 +362,7 @@ const More = () => {
             };
 
             const result = await axios.request(config);
-            console.log(result.data);
+            console.log(result.data); // response data cua axios laf result.data(neu dung fecth phai 2 lan await)
             return result.data;
         }
         return false;
