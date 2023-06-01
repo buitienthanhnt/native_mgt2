@@ -83,27 +83,24 @@ class ListCategory extends Component {
                             } else {
                                 return (
                                     <View>
-                                        <Text style={{ textAlign: "center", fontSize: 18, fontWeight: "bold" }}>{this.state.category_data ? this.state.category_data.name : ""} {"\n"}</Text>
-                                        <View >
-                                            <TouchableOpacity
-                                                style={{
-                                                    backgroundColor: "#2596be",
-                                                    borderRadius: 4,
-                                                    justifyContent: "center",
-                                                    flexDirection: "row",
-                                                    width: "100%"
-                                                }}
-                                                onPress={() => {
-                                                    // console.log("navigate to root");
-                                                    this.getData().then(
-                                                        (data) => {
-                                                            this.setState({ category_data: data, refresh: false });
-                                                        }
-                                                    );
-                                                }}>
-                                                <Text style={{ fontSize: 20, fontWeight: "bold" }}> root category</Text>
-                                            </TouchableOpacity>
-                                        </View>
+                                        <TouchableOpacity
+                                            style={{
+                                                backgroundColor: "#2596be",
+                                                borderRadius: 4,
+                                                justifyContent: "center",
+                                                flexDirection: "row",
+                                                width: "100%",
+                                                height: "100%"
+                                            }}
+                                            onPress={() => {
+                                                this.getData().then(
+                                                    (data) => {
+                                                        this.setState({ category_data: data, refresh: false });
+                                                    }
+                                                );
+                                            }}>
+                                            <Image style={{ width: "100%", height: "100%", resizeMode: "cover" }} source={require("../../assets/Images/uav-2760-1657582452.jpg")}></Image>
+                                        </TouchableOpacity>
                                     </View>)
                             }
                         }
@@ -201,9 +198,8 @@ class CategoryTop extends Component {
                         ></FlatList>
                     </View>
 
-                    <View style={{ justifyContent: "center", alignItems: "center", width: "40%", backgroundColor: "#bfff00" }}>
-                        <TouchableOpacity style={{width: '100%', height: '100%'}} onPress={()=>{
-                            // alert(1321321);
+                    <View style={{ justifyContent: "center", alignItems: "center", width: "40%", backgroundColor: "#bfff00",paddingBottom: 30 }}>
+                        <TouchableOpacity style={{ width: '100%', height: '100%' }} onPress={() => {
                             this.props.parent.getData().then(
                                 (data) => {
                                     this.props.parent.setState({ category_data: data, refresh: false });
@@ -234,7 +230,7 @@ const css = StyleSheet.create({
     view_container1: {
         flex: 25,
         backgroundColor: "#d1b984",
-        paddingBottom: 30
+        // paddingBottom: 30
     },
     view_container_2: {
         flex: 75,
