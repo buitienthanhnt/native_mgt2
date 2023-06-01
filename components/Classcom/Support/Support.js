@@ -3,7 +3,9 @@ import {
     StyleSheet, View, Text, TextInput, Clipboard, TouchableOpacity, Button,
     ScrollView, ToastAndroid, Platform, Dimensions, LogBox, PermissionsAndroid, Image
 } from "react-native";
+import axios from 'axios'; // npm install axios
 import { Tooltip } from 'react-native-elements';
+import Config from '../../../assets/Datasource/Config'
 import { ColorPicker, TriangleColorPicker, toHsv } from 'react-native-color-picker'; //  npm install react-native-color-picker --save & npm install @react-native-community/slider --save
 import { SketchPicker, SwatchesPicker, PhotoshopPicker } from 'react-color'; // npm install react-color --save :: https://casesandberg.github.io/react-color/
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
@@ -321,18 +323,59 @@ const More = () => {
             quality: 1,
         });
 
-        console.log(result);
+        // console.log(result);
         if (!result.canceled) {
             setImage(result.uri);
             setPath(result.uri);
         }
     };
 
+    const up_load_image = async (image = null) => {
+        if (image) {
+            const formData = new FormData();
+            formData.append("upload_file", { // getfrom:$_FILES["upload_file"]
+                uri: image,
+                type: "image/png",
+                name: image,
+            });
+            formData.append("username", "tha nan"); // get from request
+
+            const config = {
+                method: "post",
+                url: Config.http + Config + "phpdemo/eval.php",
+                responseType: "json",
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    // if backend supports u can use gzip request encoding
+                    // "Content-Encoding": "gzip",
+                },
+                transformRequest: (data, headers) => {
+                    // !!! override data to return formData
+                    // since axios converts that to string
+                    return formData;
+                },
+                onUploadProgress: (progressEvent) => {
+                    // use upload data, since it's an upload progress
+                    // iOS: {"isTrusted": false, "lengthComputable": true, "loaded": 123, "total": 98902}
+                },
+                data: formData,
+            };
+
+            const result = await axios.request(config);
+            console.log(result.data);
+            return result.data;
+        }
+        return false;
+    }
+
     return (
         <View>
-            <Text>{ path }</Text>
+            <Text>{path}</Text>
             <Button title="Pick an image from camera roll" onPress={pickImage} />
-            {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+            <Button title="submit" onPress={() => {
+                up_load_image(image);
+            }}></Button>
+            {image && <Image source={{ uri: image }} style={{ width: Dimensions.get("screen").width, height: 200 }} />}
             <View style={{ backgroundColor: "black", height: 1 }}></View>
         </View>
     )
