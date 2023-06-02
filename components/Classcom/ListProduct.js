@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, FlatList, Platform, TextInput } from "react-native";
+import { View, Text, Image, StyleSheet, Button, ScrollView, TouchableOpacity, Dimensions, Modal, FlatList, Platform, TextInput } from "react-native";
 import Config from '../../assets/Datasource/Config';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import { connect } from "react-redux";
@@ -31,6 +31,8 @@ class _ListProduct extends Component {
             colum: 1,
             search: "",
             search_loading: false,
+            filter_model: false,
+            filter_data: null,
             get_data_loadding: false,
             null_data: false
 
@@ -68,7 +70,7 @@ class _ListProduct extends Component {
     }
 
     getdata = function (category_id = 5, _p = 1, p_size = Config.page_size) {
-        let request_url = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.product_list + category_id + Config.use_params({_p: _p, p_size: p_size, _tha_sid: this.props.g_data._tha_sid})
+        let request_url = Config.http + Config.ip + Config.uri_241 + Config.rest + Config.v1 + Config.api.product_list + category_id + Config.use_params({ _p: _p, p_size: p_size, _tha_sid: this.props.g_data._tha_sid })
         //"?_p=" + _p + "&p_size=" + p_size ;
         return fetch(request_url).then(
             (response) => response.json()
@@ -182,9 +184,24 @@ class _ListProduct extends Component {
 
                     </TouchableOpacity>
 
+                    <Modal visible={this.state.filter_model} transparent={true}
+                        animationType="slide"
+                        hardwareAccelerated={true} >
+                        <View
+                            style={{ flex: 1, backgroundColor: "white" }}
+                        >
+                            {
+                                this.state.values && this.state.values.filters != undefined && <Filter values={this.state.values.filters}></Filter>
+                            }
+                            <Button title="hide" onPress={() => {
+                                this.setState({ filter_model: false });
+                            }}></Button>
+                        </View>
+                    </Modal>
+
                     <TouchableOpacity style={{ paddingRight: 12 }}
                         onPress={() => {
-                            this.setState({ search_loading: false })
+                            this.setState({ filter_model: !this.state.filter_model })
                         }}
                     >
                         <FontAwesome5Icon name={"filter"}
@@ -389,9 +406,42 @@ const css = StyleSheet.create({
     }
 });
 
+class Filter extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            filters: []
+        };
+    }
+
+    UNSAFE_componentWillMount() {
+        if (this.props.values) {
+            this.setState({ filters: this.props.values });
+        }
+    }
+
+    render() {
+        return (
+            <ScrollView
+                style={{
+                    height: Dimensions.get("window").height - 30,
+                    width: Dimensions.get("window").width,
+                    paddingLeft: 6, paddingRight: 6
+                }}>
+                <Text style={{ textAlign: "center", fontSize: 18, textDecorationLine: "underline", color: "violet" }}>filter products</Text>
+                <FlatList data={this.state.filters}
+                    renderItem={({ item }) => <Text>{item.label}</Text>
+                    }>
+                </FlatList>
+            </ScrollView>
+        );
+    }
+}
+
 export default connect(
-    (state)=>{
-        return{
+    (state) => {
+        return {
             g_data: state.defRe
         }
     }

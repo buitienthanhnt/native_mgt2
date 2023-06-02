@@ -16,7 +16,6 @@ const get_cart = async (propsp, _tha_sid = null)=>{
 const Home = (props) => {
 
     const { navigation, route, g_data } = props;
-    const { product_id } = g_data;
 
     const get_sid = async (request_path) => {
         const response_data = await fetch(request_path);

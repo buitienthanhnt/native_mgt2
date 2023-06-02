@@ -74,10 +74,6 @@ const Cart = (props) => {
                     </View>
                 </View>
 
-                <Button title="show cart_data" onPress={() => {
-                    console.log(cart);
-                }}></Button>
-
                 {(() => {
                     if (!emtycart) {
                         return (
