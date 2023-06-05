@@ -3,6 +3,11 @@ import { View, Text, Image, StyleSheet, Button, ScrollView, TouchableOpacity, Di
 import Config from '../../assets/Datasource/Config';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import { connect } from "react-redux";
+import Collapsible from 'react-native-collapsible';  // npm install --save react-native-collapsible
+import Reactotron from 'reactotron-react-native';
+import RenderHtml from 'react-native-render-html';
+import { RadioButton } from 'react-native-paper';
+import { Props } from "react-native-image-zoom-viewer/built/image-viewer.type";
 
 class ListProduct extends Component {
     constructor(props) {
@@ -191,7 +196,7 @@ class _ListProduct extends Component {
                             style={{ flex: 1, backgroundColor: "white" }}
                         >
                             {
-                                this.state.values && this.state.values.filters != undefined && <Filter values={this.state.values.filters}></Filter>
+                                this.state.values && this.state.values.filters != undefined && <Filter values={this.state.values.filters} category_id={this.state.category_id}></Filter>
                             }
                             <Button title="hide" onPress={() => {
                                 this.setState({ filter_model: false });
@@ -346,6 +351,118 @@ class Item extends React.Component {
     }
 }
 
+class Filter extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            filters: []
+        };
+    }
+
+    UNSAFE_componentWillMount() {
+        if (this.props.values) {
+            this.setState({ filters: this.props.values });
+        }
+    }
+
+    render() {
+        return (
+            <ScrollView
+                style={{
+                    height: Dimensions.get("window").height - 30,
+                    width: Dimensions.get("window").width,
+                    paddingLeft: 6, paddingRight: 6
+                }}>
+                <Text style={{ textAlign: "center", fontSize: 18, textDecorationLine: "underline", color: "violet" }}>filter products</Text>
+                <FlatList data={this.state.filters}
+                    renderItem={({ item }) => <FilterItem filter_data={item}></FilterItem>
+                    }>
+                </FlatList>
+            </ScrollView>
+        );
+    }
+}
+
+class FilterItem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            filter_data: {},
+            col: true
+        };
+    }
+
+    UNSAFE_componentWillMount() {
+        if (this.props.filter_data) {
+            this.setState({
+                filter_data: this.props.filter_data,
+                checked: null,
+                refresh: true
+            });
+        }
+    }
+
+    render() {
+        return (
+            <View>
+                <TouchableOpacity onPress={() => {
+                    this.setState({ col: !this.state.col });
+                }}>
+                    <Text style={css.filter_title}>{this.state.filter_data.label}</Text>
+                </TouchableOpacity>
+                {this.state.filter_data && this.state.filter_data.item && <Collapsible collapsed={this.state.col} align="center">
+                    <FlatList style={{ paddingLeft: 12, paddingBottom: 8, fontSize: 14, color: "#5bc0ff" }} data={this.state.filter_data.item} renderItem={({ item }) => {
+                        return (
+                            <FilterItemValue value={item} parent={this}></FilterItemValue>
+                        )
+                    }}
+                    ></FlatList>
+                </Collapsible>}
+                <View style={css.line}></View>
+            </View>
+        );
+    }
+}
+
+class FilterItemValue extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: null,
+            checked: false
+        };
+    }
+
+    UNSAFE_componentWillMount() {
+        if (this.props.value) {
+            this.setState({ value: this.props.value, checked: this.props.parent.state.checked == this.props.value.value ? true : false });
+        }
+    }
+
+    render() {
+        return (
+            <View style={{ flexDirection: "row", alignItems: "center"}}>
+                <RadioButton
+                    value={this.state.value.value}
+                    status={this.props.parent.state.checked == this.props.value.value ? "checked" : "unchecked"} // unchecked || checked
+                    onPress={() => {
+                        this.props.parent.setState({ checked: this.state.value.value, refresh: !this.props.parent.refresh });
+
+                    }}
+                />
+                <View style={{ height: 16, justifyContent: "center", alignItems: "center"}}>
+                    <RenderHtml
+                        contentWidth={Dimensions.get("window").width}
+                        source={{ html: this.state.value.label }}
+                        enableExperimentalMarginCollapsing={true}
+                    />
+                </View>
+            </View>
+        );
+    }
+}
+
 const css = StyleSheet.create({
     magento: {
         backgroundColor: "violet",
@@ -403,41 +520,18 @@ const css = StyleSheet.create({
         width: "100%",
         height: "100%",
         borderRadius: 20
+    },
+    line: {
+        height: 1,
+        backgroundColor: "black",
+        marginBottom: 6
+    },
+    filter_title: {
+        fontSize: 18,
+        color: "green",
+        fontWeight: "400"
     }
 });
-
-class Filter extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            filters: []
-        };
-    }
-
-    UNSAFE_componentWillMount() {
-        if (this.props.values) {
-            this.setState({ filters: this.props.values });
-        }
-    }
-
-    render() {
-        return (
-            <ScrollView
-                style={{
-                    height: Dimensions.get("window").height - 30,
-                    width: Dimensions.get("window").width,
-                    paddingLeft: 6, paddingRight: 6
-                }}>
-                <Text style={{ textAlign: "center", fontSize: 18, textDecorationLine: "underline", color: "violet" }}>filter products</Text>
-                <FlatList data={this.state.filters}
-                    renderItem={({ item }) => <Text>{item.label}</Text>
-                    }>
-                </FlatList>
-            </ScrollView>
-        );
-    }
-}
 
 export default connect(
     (state) => {

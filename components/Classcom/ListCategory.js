@@ -200,6 +200,7 @@ class CategoryTop extends Component {
 
                     <View style={{ justifyContent: "center", alignItems: "center", width: "40%", backgroundColor: "#bfff00",paddingBottom: 30 }}>
                         <TouchableOpacity style={{ width: '100%', height: '100%' }} onPress={() => {
+                            this.props.parent.setState({refresh: true});
                             this.props.parent.getData().then(
                                 (data) => {
                                     this.props.parent.setState({ category_data: data, refresh: false });
