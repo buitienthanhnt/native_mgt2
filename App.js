@@ -21,7 +21,7 @@ import TopConten from './components/Classcom/TopConten';
 import TaskFlatList from './components/TaskFlatList';
 import AddView from './components/AddView';
 import CounterContainer from './container/CounterContainer';
-// import DrawerNavigator from './navigation/DrawerNavigator';
+import DrawerNavigator from './navigation/DrawerNavigator';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 // https://blog.haposoft.com/tich-hop-redux-reactnative/ redux use docs.
 // https://redux.js.org/introduction/core-concepts
@@ -52,9 +52,11 @@ export default class App extends Component {
             return (
                 <Provider store={AppStore}>
                     <NavigationContainer>
-                        <Stack.Navigator>
-                            {/* <DrawerNavigator></DrawerNavigator> // có dùng tabbottom và tab_drawer */}
 
+                        {/* // có dùng tabbottom và tab_drawer */}
+                        {/* <DrawerNavigator></DrawerNavigator>  */}
+                        
+                        <Stack.Navigator>
                             <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} options={{ headerShown: false }} />
 
                             {/* <Stack.Screen name="Home" component={Home} options={{ title: 'Welcome' }} /> // dùng thông thường với list screen
