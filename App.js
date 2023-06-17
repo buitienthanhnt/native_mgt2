@@ -52,22 +52,12 @@ export default class App extends Component {
             return (
                 <Provider store={AppStore}>
                     <NavigationContainer>
-
                         {/* // có dùng tabbottom và tab_drawer */}
                         {/* <DrawerNavigator></DrawerNavigator>  */}
-                        
+
+                        {/* // khoong dùng tab_drawer */}
                         <Stack.Navigator>
                             <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} options={{ headerShown: false }} />
-
-                            {/* <Stack.Screen name="Home" component={Home} options={{ title: 'Welcome' }} /> // dùng thông thường với list screen
-                            <Stack.Screen name="MyStack" component={MyStack} />
-                            <Stack.Screen name="DetailProduct" component={DetailProduct} />
-                            <Stack.Screen name="ListCategory" component={ListCategory} navigation={this.props.navigation} />
-                            <Stack.Screen name="ListProduct" component={ListProduct} />
-                            <Stack.Screen name="Login" component={Login} />
-                            <Stack.Screen name="UserDetail" component={UserDetail} />
-                            <Stack.Screen name="Collslap" component={Collslap} />
-                            <Stack.Screen name="Register" component={Register} /> */}
                         </Stack.Navigator>
                     </NavigationContainer>
                 </Provider>
