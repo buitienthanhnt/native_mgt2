@@ -74,11 +74,12 @@ class UserDetail extends Component {
     }
 
     UNSAFE_componentWillMount() {
+        // this.props.navigation.navigate("Login"); // chuyển hướng qua màn LOgin
         // console.log(this.props);
     }
 
     render() {
-        console.log(this);
+        // console.log(this);
         const { first_name, last_name, default_billing_address, default_shipping_address } = this.state.customer_data;
         return (
             <View style={css.container}>

@@ -293,8 +293,8 @@ const DetailProduct = (props) => {
                                             </TouchableOpacity>
 
                                             <TouchableOpacity style={{ width: 26 }} onPress={() => {
-                                                console.log("add to wishlist");
-                                                setWishlist(!wishlist);
+                                                // navigation.navigate("Account", { screen: 'Login' });
+                                                navigation.navigate("Account", { screen: 'UserDetail' }); // điều hướng đến màn hình con(khi chưa được khởi tạo trước) bên trong 1 group tab
                                             }}>
                                                 <FontAwesome5Icon name={!wishlist ? "heart" : "gratipay"}
                                                     color={!wishlist ? "black" : "red"}

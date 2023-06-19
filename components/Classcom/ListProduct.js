@@ -491,8 +491,9 @@ const css = StyleSheet.create({
         margin: Platform.OS == "web" ? 6 : 6,
         // marginRight: 6,
         marginBottom: 18,
-        justifyContent: 'center'
-        // backgroundColor: "white"
+        justifyContent: 'center',
+        // borderWidth: 1
+        // backgroundColor: "violet"
     },
     list_1c: {
         borderRadius: 20,
